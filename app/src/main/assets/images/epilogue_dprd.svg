@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="dprdSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#18181B"/>
+      <stop offset="60%" stop-color="#27272A"/>
+      <stop offset="100%" stop-color="#7F1D1D"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#dprdSky)"/>
+
+  <!-- Council Chamber Rows -->
+  <ellipse cx="400" cy="340" rx="360" ry="100" fill="#3F3F46" stroke="#52525B" stroke-width="4"/>
+  <ellipse cx="400" cy="355" rx="310" ry="80" fill="#27272A" stroke="#52525B" stroke-width="3"/>
+  
+  <!-- Podium Speaker -->
+  <rect x="340" y="180" width="120" height="110" fill="#713F12" stroke="#A16207" stroke-width="3"/>
+  <polygon points="340,180 400,165 460,180" fill="#854D0E"/>
+  <circle cx="400" cy="220" r="18" fill="#FEF08A" stroke="#CA8A04" stroke-width="2"/>
+
+  <!-- Parliament Gavel with Impact Lines -->
+  <g transform="translate(400, 110)">
+    <rect x="-35" y="-12" width="70" height="24" rx="4" fill="#92400E" stroke="#B45309" stroke-width="2"/>
+    <rect x="-6" y="8" width="12" height="45" fill="#78350F"/>
+    <line x1="-50" y1="-25" x2="-35" y2="-15" stroke="#FDE047" stroke-width="3"/>
+    <line x1="50" y1="-25" x2="35" y2="-15" stroke="#FDE047" stroke-width="3"/>
+  </g>
+
+  <!-- Voting Board -->
+  <rect x="250" y="30" width="300" height="50" rx="6" fill="#09090B" stroke="#DC2626" stroke-width="2"/>
+  <text x="400" y="62" text-anchor="middle" fill="#EF4444" font-family="'Courier New', monospace" font-weight="900" font-size="20">
+    MOSI MAKZUL: SETUJU (82%)
+  </text>
+
+  <!-- Base Banner -->
+  <rect x="0" y="420" width="800" height="30" fill="#18181B"/>
+  <text x="400" y="440" text-anchor="middle" fill="#FCA5A5" font-family="'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="14" letter-spacing="4">
+    EPILOG 8: PEMAKZULAN SIDANG PARIPURNA DPRD
+  </text>
+</svg>

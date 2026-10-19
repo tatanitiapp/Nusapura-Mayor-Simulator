@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="festiveSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1E1B4B"/>
+      <stop offset="50%" stop-color="#831843"/>
+      <stop offset="85%" stop-color="#E11D48"/>
+      <stop offset="100%" stop-color="#FB7185"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#festiveSky)"/>
+
+  <!-- Cheering Crowd Silhouettes -->
+  <rect x="0" y="340" width="800" height="110" fill="#0F172A"/>
+  <!-- Colorful Bunting Flags -->
+  <path d="M 0 120 Q 200 170 400 130 T 800 120" stroke="#FDE047" stroke-width="2" fill="none"/>
+  <polygon points="80,140 100,180 120,140" fill="#EF4444"/>
+  <polygon points="160,150 180,190 200,150" fill="#3B82F6"/>
+  <polygon points="240,145 260,185 280,145" fill="#10B981"/>
+  <polygon points="320,135 340,175 360,135" fill="#F59E0B"/>
+  <polygon points="480,135 500,175 520,135" fill="#8B5CF6"/>
+  <polygon points="560,145 580,185 600,145" fill="#EC4899"/>
+  <polygon points="640,150 660,190 680,150" fill="#14B8A6"/>
+
+  <!-- Town Square Clock Tower -->
+  <rect x="360" y="160" width="80" height="180" fill="#881337" stroke="#F43F5E" stroke-width="2"/>
+  <polygon points="350,160 400,100 450,160" fill="#9F1239"/>
+  <circle cx="400" cy="190" r="18" fill="#FFF1F2" stroke="#E11D48" stroke-width="2"/>
+
+  <!-- Base Banner -->
+  <rect x="0" y="420" width="800" height="30" fill="#4C0519"/>
+  <text x="400" y="440" text-anchor="middle" fill="#FECDD3" font-family="'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="14" letter-spacing="4">
+    EPILOG 4: POPULIS SEJATI • PAHLAWAN RAKYAT KECIL
+  </text>
+</svg>

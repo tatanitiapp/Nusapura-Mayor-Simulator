@@ -1,0 +1,6 @@
+{
+  "name": "Mayor Simulator: City Decision",
+  "description": "Simulasi karier politik dan pengambil keputusan kota dengan Dynamic Narrative Engine.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

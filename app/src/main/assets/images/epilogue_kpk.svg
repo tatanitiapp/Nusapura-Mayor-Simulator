@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="crimeSky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="60%" stop-color="#1E1B4B"/>
+      <stop offset="100%" stop-color="#450A0A"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#crimeSky)"/>
+
+  <!-- Emergency Flashers Red & Blue -->
+  <circle cx="120" cy="80" r="140" fill="#EF4444" opacity="0.3"/>
+  <circle cx="680" cy="80" r="140" fill="#3B82F6" opacity="0.3"/>
+
+  <!-- Seal Investigation Tape Across Screen -->
+  <g transform="rotate(-10 400 220)">
+    <rect x="-100" y="190" width="1000" height="45" fill="#FACC15" stroke="#CA8A04" stroke-width="2"/>
+    <text x="400" y="222" text-anchor="middle" fill="#000000" font-family="'Impact', 'Arial Black', sans-serif" font-size="22" letter-spacing="8">
+      DISEGEL PENEGAK HUKUM • PROSES INVESTIGASI OTT
+    </text>
+  </g>
+
+  <!-- Evidence Dossier & Gavel -->
+  <rect x="330" y="260" width="140" height="100" rx="6" fill="#E2E8F0" stroke="#94A3B8" stroke-width="3"/>
+  <rect x="350" y="275" width="100" height="10" fill="#EF4444"/>
+  <rect x="350" y="295" width="70" height="6" fill="#64748B"/>
+  <rect x="350" y="310" width="85" height="6" fill="#64748B"/>
+  <rect x="350" y="325" width="50" height="6" fill="#64748B"/>
+  <!-- Red Confidential Stamp -->
+  <circle cx="420" cy="325" r="22" fill="none" stroke="#DC2626" stroke-width="3"/>
+  <text x="420" y="330" text-anchor="middle" fill="#DC2626" font-family="sans-serif" font-weight="900" font-size="9">BARBUK</text>
+
+  <!-- Base Banner -->
+  <rect x="0" y="420" width="800" height="30" fill="#450A0A"/>
+  <text x="400" y="440" text-anchor="middle" fill="#FECACA" font-family="'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="14" letter-spacing="4">
+    EPILOG 7: TERJARING OPERASI TANGKAP TANGAN (OTT)
+  </text>
+</svg>

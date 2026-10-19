@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="techSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#030712"/>
+      <stop offset="60%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="cyberGrid" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.1"/>
+      <stop offset="50%" stop-color="#38BDF8" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#techSky)"/>
+
+  <!-- Smart High-Rise Glass Towers -->
+  <rect x="80" y="140" width="80" height="270" fill="#0C4A6E" stroke="#38BDF8" stroke-width="1.5"/>
+  <rect x="190" y="90" width="100" height="320" fill="#075985" stroke="#38BDF8" stroke-width="2"/>
+  <rect x="520" y="110" width="90" height="300" fill="#075985" stroke="#38BDF8" stroke-width="2"/>
+  <rect x="640" y="160" width="80" height="250" fill="#0C4A6E" stroke="#38BDF8" stroke-width="1.5"/>
+
+  <!-- Digital Grid Glow on Center Spire -->
+  <polygon points="400,50 350,140 450,140" fill="#0284C7" stroke="#E0F2FE" stroke-width="2"/>
+  <rect x="360" y="140" width="80" height="270" fill="#0369A1" stroke="#38BDF8" stroke-width="2"/>
+  <line x1="400" y1="20" x2="400" y2="50" stroke="#38BDF8" stroke-width="4"/>
+  <circle cx="400" cy="20" r="5" fill="#38BDF8"/>
+
+  <!-- High-Speed LRT Viaduct Bridge -->
+  <path d="M 0 320 Q 400 290 800 320 L 800 345 Q 400 315 0 345 Z" fill="#0369A1"/>
+  <line x1="0" y1="320" x2="800" y2="320" stroke="#38BDF8" stroke-width="3"/>
+  <!-- LRT Train Car -->
+  <rect x="340" y="295" width="130" height="20" rx="6" fill="#F0F9FF" stroke="#0284C7" stroke-width="2"/>
+  <rect x="355" y="300" width="25" height="8" rx="2" fill="#0284C7"/>
+  <rect x="390" y="300" width="25" height="8" rx="2" fill="#0284C7"/>
+  <rect x="425" y="300" width="25" height="8" rx="2" fill="#0284C7"/>
+
+  <!-- Base Banner -->
+  <rect x="0" y="420" width="800" height="30" fill="#082F49"/>
+  <text x="400" y="440" text-anchor="middle" fill="#BAE6FD" font-family="'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="14" letter-spacing="4">
+    EPILOG 3: TEKNOKRAT MODERN • KOTA CERDAS BERKELANJUTAN
+  </text>
+</svg>

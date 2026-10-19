@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#070b14">
+<title>Mayor Simulator: City Decision</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/personal_life.css">
+</head>
+<body>
+
+<!-- ==================== TATANITI DEVELOPER SPLASH SCREEN ==================== -->
+<div id="splashScreen">
+  <div class="splashContent">
+    <div class="splashLogoBadge">
+      <svg width="200" height="200" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" class="tatanitiSvg">
+        <circle cx="250" cy="250" r="235" fill="#FFFFFF" stroke="#C69C59" stroke-width="6"/>
+        <circle cx="250" cy="250" r="227" fill="none" stroke="#E6C88B" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <g transform="translate(155, 85)">
+          <path d="M 0,85 H 80 V 30 H 48 V 0 H 96 V 85 H 96 C 96,120 72,138 38,138 H 0 V 98 H 36 C 46,98 52,94 52,85 V 85 Z" fill="#0F2342"/>
+          <rect x="42" y="146" width="22" height="22" fill="#C69C59"/>
+          <path d="M 68,102 C 68,55 98,35 142,35 C 172,35 180,55 180,95 V 168 H 136 V 95 C 136,75 128,68 116,68 C 102,68 96,78 96,95 V 168 H 68 Z" fill="#C69C59"/>
+        </g>
+        <g transform="translate(250, 335)" text-anchor="middle">
+          <text font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-weight="900" font-size="64" letter-spacing="-1">
+            <tspan fill="#0F2342">tata</tspan><tspan fill="#C69C59">niti</tspan>
+          </text>
+        </g>
+        <text x="250" y="372" text-anchor="middle" fill="#0F2342" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-weight="700" font-size="16" letter-spacing="4.5">
+          SIMULASI KEBIJAKAN PUBLIK
+        </text>
+        <line x1="105" y1="392" x2="235" y2="392" stroke="#C69C59" stroke-width="1.5"/>
+        <rect x="245" y="387" width="10" height="10" fill="#C69C59"/>
+        <line x1="265" y1="392" x2="395" y2="392" stroke="#C69C59" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="splashDevBadge">TATANITI.APP PRESENTS</div>
+    <div class="splashTitle">Mayor Simulator: City Decision</div>
+    <div class="splashSubtitle" data-i18n="splash_sub">Simulasi Kebijakan Publik & Governance Game</div>
+    
+    <div class="splashLoadingBarWrap">
+      <div class="splashLoadingBar"></div>
+    </div>
+    <div class="splashTapHint" data-i18n="splash_tap_hint">Ketuk layar untuk melanjutkan</div>
+  </div>
+</div>
+
+<!-- ==================== HAMBURGER FAB ==================== -->
+<button id="hamburgerFab" aria-label="Main Menu Navigasi" style="display:none;">
+  <span class="hamIcon">☰</span>
+  <span>Menu</span>
+</button>
+
+<!-- ==================== MAIN MENU ==================== -->
+<div id="startScreen" class="show">
+  <div class="startCard glass">
+    <div class="startLogoHeader">
+      <svg viewBox="0 0 500 500" fill="none" class="tatanitiSvg">
+        <circle cx="250" cy="250" r="235" fill="#FFFFFF" stroke="#C69C59" stroke-width="6"/>
+        <g transform="translate(155, 85)">
+          <path d="M 0,85 H 80 V 30 H 48 V 0 H 96 V 85 H 96 C 96,120 72,138 38,138 H 0 V 98 H 36 C 46,98 52,94 52,85 V 85 Z" fill="#0F2342"/>
+          <rect x="42" y="146" width="22" height="22" fill="#C69C59"/>
+          <path d="M 68,102 C 68,55 98,35 142,35 C 172,35 180,55 180,95 V 168 H 136 V 95 C 136,75 128,68 116,68 C 102,68 96,78 96,95 V 168 H 68 Z" fill="#C69C59"/>
+        </g>
+        <g transform="translate(250, 335)" text-anchor="middle">
+          <text font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="64" letter-spacing="-1">
+            <tspan fill="#0F2342">tata</tspan><tspan fill="#C69C59">niti</tspan>
+          </text>
+        </g>
+        <text x="250" y="372" text-anchor="middle" fill="#0F2342" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="16" letter-spacing="4.5">
+          SIMULASI KEBIJAKAN PUBLIK
+        </text>
+      </svg>
+      <div class="startDevTag">TATANITI.APP</div>
+    </div>
+
+    <!-- Language & Audio Selector Bar -->
+    <div style="text-align:center;margin-top:6px;display:flex;justify-content:center;align-items:center;gap:8px;">
+      <button class="langBtn" id="btnAudioToggleStart" onclick="AudioManager.toggleMute()" title="Nyalakan/Matikan Suara Permainan">🔊 Sound</button>
+      <div class="langToggleWrap">
+        <button class="langBtn active" id="langBtnId" onclick="setGameLanguage('id')">🇮🇩 Bahasa</button>
+        <button class="langBtn" id="langBtnEn" onclick="setGameLanguage('en')">🇬🇧 English</button>
+      </div>
+    </div>
+
+    <!-- Hero City Hall Illustration -->
+    <div style="width:100%;border-radius:12px;overflow:hidden;margin:10px 0 12px;border:1px solid rgba(255,255,255,0.1);max-height:110px;background:#091222;">
+      <img src="images/epilogue_negarawan.svg" alt="Balaikota Nusapura" loading="lazy" decoding="async" style="width:100%;height:110px;object-fit:cover;object-position:center 35%;">
+    </div>
+
+    <div class="startEyebrow" data-i18n="start_eyebrow">Simulasi Karier Politik & Narasi Dinamis</div>
+    <div class="startTitle">Mayor Simulator: City Decision</div>
+    <div class="startTagline" data-i18n="start_tagline">"Membangun kota bukan hanya soal anggaran, tetapi tentang jalinan keputusan yang hidup selama bertahun-tahun."</div>
+
+    <div id="continueBanner">
+      <span data-i18n="continue_found">💾 Ditemukan progres tersimpan sebelumnya.</span>
+      <button id="btnContinueSave" data-i18n="btn_continue">Lanjutkan</button>
+    </div>
+
+    <div class="menuList">
+      <button class="menuBtn primary" id="btnStartNew"><span class="menuIcon">🗳️</span> <span data-i18n="menu_new_game">Mulai Baru (New Game)</span></button>
+      <button class="menuBtn" id="btnMenuContinue"><span class="menuIcon">📂</span> <span data-i18n="menu_continue">Lanjutkan (Continue)</span></button>
+      <button class="menuBtn" id="btnMenuEncyclopedia"><span class="menuIcon">📖</span> <span data-i18n="menu_encyc">Ensiklopedia Pemerintahan</span></button>
+      <button class="menuBtn" id="btnMenuAchievement"><span class="menuIcon">🏆</span> <span data-i18n="menu_ach">Pencapaian (Achievements)</span></button>
+      <button class="menuBtn" id="btnMenuGallery" onclick="GalleryManager.openGalleryModal()"><span class="menuIcon">🏛️</span> <span data-i18n="menu_gallery">Galeri Epilog Akhir Jabatan</span></button>
+      <button class="menuBtn" id="btnMenuOffice3d" onclick="openOffice3dModal()"><span class="menuIcon">🏛️</span> <span data-i18n="menu_office_3d">Ruang Kerja Walikota 3D</span></button>
+      <button class="menuBtn" id="btnMenuSettings"><span class="menuIcon">⚙️</span> <span data-i18n="menu_settings">Pengaturan (Settings)</span></button>
+      <button class="menuBtn" id="btnMenuAbout"><span class="menuIcon">ℹ️</span> <span data-i18n="menu_about">Tentang (About)</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MAYOR SELECTION SCREEN ==================== -->
+<div class="overlayScreen" id="mayorSelectionScreen">
+  <div class="overlayCard overlayCardWide glass" style="max-width:680px;text-align:left;">
+    <div style="text-align:center;margin-bottom:12px;">
+      <div class="stepEyebrow" data-i18n="step_mayor_eyebrow">Langkah 1 dari 4</div>
+      <div class="stepTitle" data-i18n="step_mayor_title">Pilih Figur Calon Walikota</div>
+      <p class="muted" style="font-size:12px;margin:4px 0 10px 0;" data-i18n="step_mayor_sub">
+        Pilih figur Walikota yang akan Anda mainkan untuk memimpin Kota Nusapura. Setiap kandidat membawa latar belakang, gaya kepemimpinan, dan keunggulan spesifik:
+      </p>
+    </div>
+    <div class="mayorGrid" id="mayorGrid"></div>
+    <button class="bigBtn" id="btnConfirmMayor" data-i18n="step_mayor_btn_next" style="width:100%;margin-top:14px;">Lanjut Pilih Tingkat Kesulitan →</button>
+  </div>
+</div>
+
+<!-- ==================== DIFFICULTY SCREEN ==================== -->
+<div class="overlayScreen" id="difficultyScreen">
+  <div class="overlayCard glass">
+    <div class="stepEyebrow" data-i18n="step1_eyebrow">Langkah 2 dari 4</div>
+    <div class="stepTitle" data-i18n="step1_title">Pilih Tingkat Kesulitan</div>
+    <div class="diffGrid" id="diffGrid"></div>
+    <button class="bigBtn" id="btnConfirmDifficulty" data-i18n="step1_btn_next">Lanjut Pilih Lawan Politik →</button>
+  </div>
+</div>
+
+<!-- ==================== CANDIDATE SCREEN ==================== -->
+<div class="overlayScreen" id="candidateScreen">
+  <div class="overlayCard overlayCardWide glass" style="max-width:680px;text-align:left;">
+    <div style="text-align:center;margin-bottom:12px;">
+      <div class="stepEyebrow" data-i18n="step2_eyebrow">Langkah 3 dari 4</div>
+      <div class="stepTitle" data-i18n="step2_title">Pasangan & Lawan Pilkada</div>
+    </div>
+    
+    <!-- SECTION A: PILIH CALON WAKIL WALIKOTA -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:15px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px;">
+        <span>👥</span> <span data-i18n="step2_vice_title">Pilih Calon Wakil Walikota Anda</span>
+      </div>
+      <p class="muted" style="font-size:12px;margin:4px 0 10px 0;" data-i18n="step2_vice_sub">
+        Wakil Walikota mendampingi kepemimpinan Anda selama 5 tahun serta memberikan keahlian dan dukungan politik khusus:
+      </p>
+      <div class="viceGrid" id="viceGrid"></div>
+    </div>
+
+    <!-- SECTION B: LAWAN UTAMA PILKADA -->
+    <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:14px;margin-bottom:14px;">
+      <div style="font-size:14px;font-weight:800;color:var(--red);margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+        <span>⚔️</span> <span data-i18n="step2_opp_title">Lawan Utama Pilkada (Rivalitas Politik)</span>
+      </div>
+      <div id="opponentBannerWrap"></div>
+      <div class="candGrid" id="candGridOthers" style="margin-top:10px;"></div>
+    </div>
+
+    <button class="bigBtn" id="btnToPromise" data-i18n="step2_btn_next" style="width:100%;">Lanjut Susun Janji Kampanye →</button>
+  </div>
+</div>
+
+<!-- ==================== PROMISE SCREEN ==================== -->
+<div class="overlayScreen" id="promiseScreen">
+  <div class="overlayCard glass" style="max-width:640px;text-align:left;">
+    <div style="text-align:center;margin-bottom:12px;">
+      <div class="stepEyebrow" data-i18n="step3_eyebrow">Langkah 4 dari 4</div>
+      <div class="stepTitle" data-i18n="step3_title">Janji Kampanye Prioritas (Pilih Tepat 3)</div>
+      <p class="muted" data-i18n="step3_sub">Pilih tepat <b>3 janji kampanye prioritas</b> yang akan menjadi visi misi utama dan fokus belanja APBD Anda.</p>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <div class="promiseCounter" id="promiseCounter" style="margin:0;font-weight:800;color:var(--blue-soft);">0 / 3 janji dipilih</div>
+      <button class="iconBtn" id="btnRerollPromises" onclick="rerollCampaignPromisesPool()" style="font-size:11px;padding:6px 12px;" data-i18n="btn_reroll_promises">🎲 Acak Opsi Janji</button>
+    </div>
+    <div class="promiseList" id="promiseList"></div>
+    <button class="bigBtn" id="btnStartCampaign" data-i18n="step3_btn_next" style="width:100%;margin-top:14px;" disabled>🚩 Pilih Tepat 3 Janji Kampanye</button>
+  </div>
+</div>
+
+<!-- ==================== CAMPAIGN SCREEN ==================== -->
+<div class="overlayScreen" id="campaignScreen">
+  <div class="overlayCard overlayCardWide glass" style="text-align:left;">
+    <div class="stepEyebrow" data-i18n="camp_eyebrow">Masa Kampanye Pilkada Nusapura</div>
+    <div class="campDayTrack" id="campDayTrack"></div>
+    <div class="campHud" id="campHud"></div>
+
+    <div class="campLayout">
+      <div>
+        <div class="progressLabel" id="campProgressLabel" data-i18n="camp_loading_label">Memuat peristiwa kampanye...</div>
+        <div id="campEventCard"></div>
+      </div>
+      <div>
+        <div class="mediaTabs">
+          <button class="mediaTabBtn active" data-tab="times" data-i18n="media_tab_times">📰 Nusapura Times</button>
+          <button class="mediaTabBtn" data-tab="tv" data-i18n="media_tab_tv">📺 Nusapura TV</button>
+          <button class="mediaTabBtn" data-tab="forum" data-i18n="media_tab_forum">🗣️ Forum Warga</button>
+          <button class="mediaTabBtn" data-tab="sosmed" data-i18n="media_tab_sosmed">💬 Sosmed</button>
+        </div>
+        <div class="newsList" id="campMediaList" style="max-height:340px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUICK COUNT SCREEN ==================== -->
+<div class="overlayScreen" id="quickCountScreen">
+  <div class="overlayCard glass">
+    <div class="stepEyebrow" data-i18n="qc_eyebrow">Hari Pemungutan Suara</div>
+    <div class="stepTitle" data-i18n="qc_title">Quick Count Real-Time</div>
+    <div class="qcBars" id="qcBars"></div>
+    <div class="qcPercentLabel" id="qcPercentLabel" data-i18n="qc_loading_label">Menghitung suara masuk...</div>
+    <div class="qcResult" id="qcResult"></div>
+    <div class="modalActions" id="qcActions" style="display:none;justify-content:center;"></div>
+  </div>
+</div>
+
+<!-- ==================== EVALUATION SCREEN ==================== -->
+<div class="overlayScreen" id="evaluationScreen">
+  <div class="overlayCard glass">
+    <div class="stepEyebrow" data-i18n="eval_eyebrow">Evaluasi Akhir Periode</div>
+    <div class="stepTitle" id="evaluationTitle" data-i18n="eval_title">Masa Jabatan Usai</div>
+    <div id="evaluationBody"></div>
+    <div class="startBtns" style="margin-top:16px;" id="evaluationActions">
+      <button class="bigBtn" id="btnToTerm2" data-i18n="btn_to_term2">🗳️ Maju ke Pilkada Periode Kedua</button>
+      <button class="bigBtn secondary" id="btnEvaluationMenu" onclick="showStartScreen()" data-i18n="btn_eval_menu">🏠 Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== GAME OVER SCREEN ==================== -->
+<div class="overlayScreen" id="gameOverScreen">
+  <div class="overlayCard glass">
+    <div class="stepEyebrow" data-i18n="gameover_eyebrow">Hasil Pilkada</div>
+    <div class="stepTitle" data-i18n="gameover_title">Anda Kalah Pilkada</div>
+    <div id="gameOverBody"></div>
+    <div class="startBtns" style="margin-top:18px;">
+      <button class="bigBtn" id="btnGameOverRetry" data-i18n="btn_retry">🔄 Main Lagi</button>
+      <button class="bigBtn secondary" id="btnGameOverMenu" data-i18n="btn_gameover_menu">🏠 Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ABOUT MODAL ==================== -->
+<div class="modalOverlay" id="aboutModal">
+  <div class="modalBox" role="dialog" aria-modal="true">
+    <button class="closeX" aria-label="Tutup" id="btnCloseAbout">✕</button>
+    <h2 data-i18n="about_title">ℹ️ Tentang Permainan</h2>
+    <div class="startStory" data-i18n="about_story">
+      Tahun <b>2027</b>. Anda memimpin Kota Nusapura — kota metropolitan fiktif dengan 1,35 juta jiwa penduduk.
+      Kini dilengkapi dengan <b>Dynamic Narrative Engine</b>: setiap keputusan Anda mempengaruhi 19 Aktor
+      (LSM, Mahasiswa, KPK, BPK, Pengusaha, Tokoh Agama, Media, dll.) dan dapat berkembang menjadi rantai cerita
+      bercabang 3–10 tahap selama bertahun-tahun.
+    </div>
+    <p class="muted" style="margin-top:14px;">Mayor Simulator: City Decision V3.5 — Dynamic Narrative Engine & Multi-Chain Career</p>
+  </div>
+</div>
+
+<!-- ==================== SETTINGS MODAL ==================== -->
+<div class="modalOverlay" id="settingsModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true" style="max-width:650px;">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('settingsModal')" data-i18n="btn_back">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="settings_title">⚙️ Pengaturan Permainan</h2>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseSettings">✕</button>
+    </div>
+
+    <!-- Dual Language Preference Section -->
+    <div style="background:rgba(255,255,255,0.035);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0;">
+      <h4 style="margin:0 0 8px;color:#fff;font-size:13.5px;" data-i18n="settings_lang_header">🌐 Mode Bahasa / Language Mode</h4>
+      <p class="muted" style="margin:0 0 12px;font-size:12px;" data-i18n="settings_lang_sub">Pilih preferensi bahasa. Mode Hybrid English menerjemahkan narasi & UI dengan mempertahankan istilah unik tata kelola Indonesia (APBD, DAK, DPRD, dsb).</p>
+      <div style="display:flex;gap:10px;">
+        <button class="bigBtn secondary" id="btnLangId" onclick="setGameLanguage('id')" style="flex:1;border-color:var(--blue-soft);">🇮🇩 Bahasa Indonesia</button>
+        <button class="bigBtn secondary" id="btnLangEn" onclick="setGameLanguage('en')" style="flex:1;">🇬🇧 English (Hybrid)</button>
+      </div>
+    </div>
+
+    <!-- Audio & Voice Grunts Settings -->
+    <div style="background:rgba(255,255,255,0.035);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <h4 style="margin:0;color:#fff;font-size:13.5px;" data-i18n="settings_audio_header">🎵 Audio & Suara Karakter</h4>
+        <button class="iconBtn" id="btnTestAudio" onclick="AudioManager.playSfx('sfx_palu')" style="font-size:11px;padding:4px 10px;background:rgba(59,130,246,0.2);border-color:#3b82f6;color:#93c5fd;" data-i18n="settings_btn_test_audio">🔊 Tes Suara Palu</button>
+      </div>
+      <p class="muted" style="margin:0 0 12px;font-size:12px;" data-i18n="settings_audio_sub">Atur volume musik latar (Balaikota, Krisis, Pemilu), efek suara stempel, serta respon suara grunts para tokoh.</p>
+      
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:12px;color:var(--gray-300);" data-i18n="settings_audio_bgm">Musik Latar (BGM)</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <input type="range" min="0" max="1" step="0.05" id="sliderBgmVol" value="0.6" onchange="AudioManager.setBgmVolume(this.value)" oninput="AudioManager.setBgmVolume(this.value)" style="width:130px;accent-color:#3b82f6;">
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:12px;color:var(--gray-300);" data-i18n="settings_audio_sfx">Efek Suara (SFX Stempel & Palu)</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <input type="range" min="0" max="1" step="0.05" id="sliderSfxVol" value="0.8" onchange="AudioManager.setSfxVolume(this.value)" oninput="AudioManager.setSfxVolume(this.value)" style="width:130px;accent-color:#3b82f6;">
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
+          <span style="font-size:12px;color:var(--gray-300);" data-i18n="settings_audio_voice">Suara Vokal Tokoh (Voice Grunts)</span>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#93c5fd;cursor:pointer;font-weight:700;">
+            <input type="checkbox" id="chkVoiceGrunts" checked onchange="AudioManager.setVoiceEnabled(this.checked)" style="accent-color:#3b82f6;"> <span data-i18n="settings_audio_voice_active">Aktif</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="summaryGrid" style="margin-top:10px;">
+      <div><span data-i18n="settings_diff_label">Tingkat Kesulitan Aktif</span>: <b id="settingsDifficulty">-</b></div>
+      <div><span data-i18n="settings_term_label">Periode Berjalan</span>: <b id="settingsTerm">-</b></div>
+    </div>
+    <h4 data-i18n="settings_data_header">Data Permainan</h4>
+    <div class="startBtns">
+      <button class="bigBtn secondary" id="btnSettingsReset" data-i18n="btn_reset_progress">♻️ Reset Seluruh Progres</button>
+    </div>
+    <div class="modalFooterRow" style="margin-top:20px;">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('settingsModal')" data-i18n="btn_back_main">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== HAMBURGER MENU / PUSAT KENDALI WALIKOTA MODAL ==================== -->
+<div class="modalOverlay" id="hamburgerModal">
+  <div class="modalBox" role="dialog" aria-modal="true">
+    <button class="closeX" aria-label="Tutup" id="btnCloseHamburger">✕</button>
+    
+    <!-- HEADER PAUSE MENU TITLE & RINGKASAN STATUS KOTA -->
+    <div class="hamPauseHeader">
+      <div class="hamPauseTitle">
+        <span class="hamPauseBadge" data-i18n="ham_badge">PUSAT KENDALI KOTA</span>
+        <h2 data-i18n="ham_title">BALAI KOTA NUSAPURA</h2>
+      </div>
+      <div class="hamLangToggle" id="hamLangToggle" title="Ganti Bahasa / Switch Language">
+        <button class="hamLangToggleBtn" id="hamLangId" onclick="switchGameLanguage('id')">🇮🇩 ID</button>
+        <button class="hamLangToggleBtn" id="hamLangEn" onclick="switchGameLanguage('en')">🇬🇧 EN</button>
+      </div>
+    </div>
+
+    <div class="hamHeaderCard" id="hamHeaderCard">
+      <div class="hamHeaderTop">
+        <div class="hamHeaderTitle">
+          <span>👑</span>
+          <span id="hamValName" data-i18n="ham_mayor_title">Walikota Nusapura</span>
+        </div>
+        <div class="hamHeaderBadge" id="hamValTerm" data-i18n="ham_term_badge">Masa Jabatan</div>
+      </div>
+      <div class="hamStatsMiniGrid">
+        <div class="hamStatMiniItem">
+          <div class="hamStatMiniLabel" data-i18n="ham_stat_apbd">Kas APBD</div>
+          <div class="hamStatMiniVal" id="hamValApbd">Rp -</div>
+        </div>
+        <div class="hamStatMiniItem">
+          <div class="hamStatMiniLabel" data-i18n="ham_stat_sat">Kepuasan Publik</div>
+          <div class="hamStatMiniVal" id="hamValSat">-%</div>
+        </div>
+        <div class="hamStatMiniItem">
+          <div class="hamStatMiniLabel" data-i18n="ham_stat_risk">Risiko Korupsi</div>
+          <div class="hamStatMiniVal" id="hamValRisk">-</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB NAVIGATION BAR -->
+    <div class="hamTabsBar" id="hamTabsBar">
+      <button class="hamTabBtn active" data-cat="birokrasi"><span data-i18n="ham_tab_gov">🏛️ Tata Kelola</span> <span class="hamTabBadge" id="badgeTabBirokrasi">6</span></button>
+      <button class="hamTabBtn" data-cat="ekonomi"><span data-i18n="ham_tab_econ">💼 Ekonomi & Proyek</span> <span class="hamTabBadge" id="badgeTabEkonomi">4</span></button>
+      <button class="hamTabBtn" data-cat="politik"><span data-i18n="ham_tab_pol">⚖️ Politik & Personal</span> <span class="hamTabBadge" id="badgeTabPolitik">5</span></button>
+      <button class="hamTabBtn" data-cat="data"><span data-i18n="ham_tab_data">📊 Data & Arsip</span> <span class="hamTabBadge" id="badgeTabData">3</span></button>
+      <button class="hamTabBtn" data-cat="sistem"><span data-i18n="ham_tab_sys">⚙️ Sistem</span> <span class="hamTabBadge">4</span></button>
+    </div>
+
+    <!-- BODY MODAL DENGAN SCROLLING HALUS -->
+    <div class="hamModalBody" id="hamModalBody">
+      <div class="hamCardGrid" id="hamCardGrid">
+        <!-- Feature Cards dynamically rendered here -->
+      </div>
+    </div>
+
+    <!-- SEKSI 3: KONTROL KELUAR & RESUME -->
+    <div class="hamFooterRow">
+      <button class="hamBtn danger" id="btnHamburgerHome">
+        <span class="hamBtnIcon">🏠</span>
+        <span data-i18n="ham_btn_home">Menu Utama</span>
+      </button>
+      <button class="hamBtn" id="btnHamburgerSave">
+        <span class="hamBtnIcon">💾</span>
+        <span data-i18n="ham_btn_save">Simpan</span>
+      </button>
+      <button class="hamBtn" id="btnHamburgerLoad">
+        <span class="hamBtnIcon">📂</span>
+        <span data-i18n="ham_btn_load">Muat</span>
+      </button>
+      <button class="hamBtn primary resumeBtn" id="btnHamburgerResume">
+        <span class="hamBtnIcon">▶️</span>
+        <span data-i18n="ham_btn_resume">Lanjutkan Permainan</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== MAIN APP ==================== -->
+<div id="app" style="display:none;">
+
+  <div class="termTrack" id="termTrack"></div>
+
+  <div class="hud glass">
+    <div class="hudItem">
+      <div class="hudLabel" data-i18n="hud_year_label">Masa Jabatan</div>
+      <div class="hudValue" id="hudYear">Tahun ke-1</div>
+    </div>
+    <div class="hudItem">
+      <div class="hudLabel" data-i18n="hud_apbd_label">APBD Kota</div>
+      <div class="hudValue" id="hudApbd">Rp 3.8 T</div>
+    </div>
+    <div class="hudItem">
+      <div class="hudLabel" data-i18n="hud_pad_label">PAD</div>
+      <div class="hudValue" id="hudPad">Rp 1.2 T</div>
+    </div>
+    <div class="hudItem">
+      <div class="hudLabel" data-i18n="hud_pop_label">Penduduk</div>
+      <div class="hudValue" id="hudPenduduk">1.350.000</div>
+    </div>
+    <div class="hudItem">
+      <div class="hudLabel" data-i18n="hud_growth_label">Pertumbuhan APBD</div>
+      <div class="hudValue" id="hudGrowth">+0%</div>
+    </div>
+    <div class="hudItem" id="hudMayorItem">
+      <div class="hudLabel" data-i18n="hud_mayor_label">👔 Walikota</div>
+      <div class="hudValue" id="hudMayorName" style="font-size:12px;color:#93c5fd;">-</div>
+    </div>
+    <div class="hudItem" id="hudViceItem">
+      <div class="hudLabel" data-i18n="hud_vice_label">👥 Wawalkot</div>
+      <div class="hudValue" id="hudViceName" style="font-size:12px;color:var(--blue-soft);">-</div>
+    </div>
+    <div class="hudItem">
+      <div class="hudLabel" data-i18n="hud_sat_label">Kepuasan Warga</div>
+      <div class="hudValue" id="hudSat">68%</div>
+      <div class="hudBarTrack"><div class="hudBarFill" id="hudSatBar" style="width:68%"></div></div>
+    </div>
+  </div>
+
+  <div class="v3WidgetRow" id="v3WidgetRow">
+    <div class="v3Gauge">
+      <div class="v3GaugeLabel" data-i18n="gauge_sentiment_label">📡 Sentimen Warga</div>
+      <div class="v3GaugeTrack"><div class="v3GaugeFill sentiment" id="v3SentimentBar" style="width:50%"></div></div>
+      <div class="v3GaugeVal" id="v3SentimentVal">Netral</div>
+    </div>
+    <div class="v3Gauge">
+      <div class="v3GaugeLabel" data-i18n="gauge_risk_label">⚠️ Risiko Korupsi</div>
+      <div class="v3GaugeTrack"><div class="v3GaugeFill risk" id="v3RiskBar" style="width:0%"></div></div>
+      <div class="v3GaugeVal" id="v3RiskVal">Rendah</div>
+    </div>
+  </div>
+
+  <div class="hudActions" style="margin-bottom:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;">
+    <!-- CORE STREAMLINED CONTROLS -->
+    <button class="iconBtn" id="btnShowHamburger" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;border-color:rgba(120,180,255,0.5);font-weight:800;padding:10px 16px;box-shadow:0 4px 14px rgba(59,124,246,0.35);position:relative;" data-i18n="btn_control_center">☰ Pusat Kendali <span id="hamUrgentBadge" style="display:none;background:#ef4444;color:#fff;font-size:10px;font-weight:900;border-radius:10px;padding:1px 6px;margin-left:4px;">!</span></button>
+    <button class="iconBtn" id="btnSecretaryBriefing" onclick="openSecretaryBriefingModal()" style="background:linear-gradient(135deg,rgba(11,37,69,0.95),rgba(212,169,79,0.3));color:#fef08a;border:1px solid #d4a94f;font-weight:800;box-shadow:0 3px 12px rgba(212,169,79,0.3);position:relative;" title="Memo Sekretaris Pribadi & Evaluasi Kebijakan">📂 <span data-i18n="btn_secretary">Memo Sekretaris</span> <span id="secUrgentDot" style="display:inline-block;width:8px;height:8px;background:#d4a94f;border-radius:50%;margin-left:4px;box-shadow:0 0 6px #facc15;"></span></button>
+    <button class="iconBtn" id="btnPoliticalDossier" onclick="openPoliticalDossierModal()" style="background:rgba(239,68,68,0.18);color:#fca5a5;border-color:rgba(239,68,68,0.5);font-weight:800;">📁 <span data-i18n="btn_dossier">Berkas Politik</span> <span id="dossierBadge" style="background:#ef4444;color:#fff;border-radius:10px;padding:2px 7px;font-size:10px;margin-left:2px;font-weight:900;">0</span></button>
+    <button class="iconBtn" id="btnShowBudget" style="background:rgba(16,185,129,0.15);color:#34d399;border-color:#10b981;font-weight:800;" data-i18n="btn_budget">💰 APBD</button>
+    <button class="iconBtn" id="btnQuickCabinet" onclick="openCabinetDirect()" style="background:rgba(99,102,241,0.2);color:#a5b4fc;border-color:rgba(99,102,241,0.5);font-weight:800;" title="Evaluasi & Mutasi Kepala Dinas"><span id="quickCabinetBadge" style="display:none;color:#ef4444;margin-right:2px;">⚠️</span>🗂️ <span data-i18n="dock_cabinet">Kabinet Kadis</span></button>
+    <button class="iconBtn" id="btnShowLife" style="background:linear-gradient(135deg,rgba(236,72,153,0.2),rgba(139,92,246,0.2));color:#f472b6;border-color:#ec4899;font-weight:800;" data-i18n="btn_life">👤 Karir & Pribadi</button>
+    <button class="iconBtn" id="btnOpenOffice3d" onclick="openOffice3dModal()" style="background:linear-gradient(135deg,rgba(168,85,247,0.25),rgba(59,130,246,0.25));color:#d8b4fe;border-color:rgba(168,85,247,0.6);font-weight:800;box-shadow:0 3px 12px rgba(168,85,247,0.3);" title="Masuk ke Ruang Kerja Walikota 3D" data-i18n="btn_office_3d">🏛️ <span data-i18n="btn_office_3d">Ruang Kerja 3D</span></button>
+    <button class="dockExpandBtn" id="btnToggleExtraTools" onclick="toggleExtraDockTools()" data-i18n="btn_toggle_extra_tools">🛠️ Menu Lainnya ▾</button>
+    <button class="iconBtn" id="btnUndoHud" onclick="undoLastChoice()" style="display:none;background:rgba(234,179,8,0.22);color:#facc15;border-color:#eab308;font-weight:800;" data-i18n="btn_undo">↺ Batalkan</button>
+    <button class="iconBtn" id="btnAudioToggle" onclick="AudioManager.toggleMute()" style="background:rgba(59,130,246,0.18);color:#93c5fd;border-color:rgba(59,130,246,0.4);font-weight:700;" title="Toggle Suara">🔊</button>
+
+    <!-- SECONDARY COLLAPSIBLE ACTIONS -->
+    <div class="dockMoreActions collapsed" id="dockMoreActions">
+      <button class="iconBtn" id="btnQuickParipurna" onclick="openParipurnaDirect()" style="background:rgba(147,51,234,0.2);color:#c084fc;border-color:rgba(147,51,234,0.5);font-weight:800;" title="Sidang Paripurna & Lobi Fraksi DPRD">🏛️ <span data-i18n="dock_paripurna">Sidang DPRD</span></button>
+      <button class="iconBtn" id="btnQuickMusrenbang" onclick="openMusrenbangDirect()" style="background:rgba(20,184,166,0.2);color:#5eead4;border-color:rgba(20,184,166,0.5);font-weight:800;" title="Musrenbang Usulan Warga">📋 <span data-i18n="dock_musrenbang">Musrenbang</span></button>
+      <button class="iconBtn" id="btnQuickPerda" onclick="openPerdaDirect()" style="background:rgba(217,119,6,0.2);color:#fcd34d;border-color:rgba(217,119,6,0.5);font-weight:800;" title="Regulasi Perda Kota">📜 <span data-i18n="dock_perda">Perda Kota</span></button>
+      <button class="iconBtn" id="btnQuickDiplomacy" onclick="openDiplomacyDirect()" style="background:rgba(14,165,233,0.2);color:#7dd3fc;border-color:rgba(14,165,233,0.5);font-weight:800;" title="Lobi DAK & Kemitraan Pusat">🏛️ <span data-i18n="dock_diplomacy">Lobi Pusat</span></button>
+      <button class="iconBtn" id="btnQuickPress" onclick="openPressDirect()" style="background:rgba(59,130,246,0.2);color:#93c5fd;border-color:rgba(59,130,246,0.5);font-weight:800;" title="Konferensi Pers & Doorstop Wartawan">🎙️ <span data-i18n="dock_press">Konferensi Pers</span></button>
+      <button class="iconBtn" id="btnShowEmergency" style="background:rgba(239,68,68,0.2);color:#ef4444;border-color:#ef4444;font-weight:800;" data-i18n="btn_emergency">🚨 Tanggap Darurat</button>
+      <button class="iconBtn" id="btnShowStats" style="background:rgba(255,255,255,0.06);color:#e2e8f0;font-weight:700;" data-i18n="btn_stats">📊 Statistik</button>
+      <button class="iconBtn" id="btnToggleCleanMode" data-i18n="btn_clean_hud" onclick="toggleCleanFocusMode()" style="background:rgba(255,255,255,0.06);color:#cbd5e1;font-weight:700;">👁️ Mode Ringkas</button>
+      <button class="iconBtn" id="btnSave" style="background:rgba(255,255,255,0.06);color:#94a3b8;" data-i18n="btn_save_quick">💾 Simpan</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- LEFT: EVENT / DECISION -->
+    <div>
+      <div class="eventPanel glass">
+        <div class="progressLabel">
+          <span id="progressLabel">Memuat peristiwa...</span>
+          <span id="eventRarityBadge" class="eventBadge"></span>
+        </div>
+        <div id="undoAlertBar" style="display:none;"></div>
+        <div id="eventCard"></div>
+        <!-- LIVE CITY BREAKING NEWS & PULSE TICKER -->
+        <div class="cityLiveTicker" id="cityLiveTicker" onclick="showCityTickerPreview()" role="button" tabindex="0" title="Klik untuk pratinjau status lengkap / Click for full briefing preview">
+          <span class="cityTickerBadge" id="cityTickerBadge">KILAS KOTA</span>
+          <span class="cityTickerText" id="cityTickerText">Memantau situasi ketertiban dan perkembangan aspirasi warga Nusapura...</span>
+          <span class="cityTickerExpandHint" id="cityTickerExpandHint" title="Buka Pratinjau / Open Briefing">🔍</span>
+        </div>
+      </div>
+
+      <div class="sidePanel glass">
+        <div class="sideTitleRow">
+          <div class="sideTitle" data-i18n="news_title">📰 Nusapura Times</div>
+          <div class="sideTag" data-i18n="news_tag">Berita Terkini</div>
+        </div>
+        <div class="newsList" id="newsList"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: DASHBOARD -->
+    <div>
+      <div class="dashPanel glass">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;" id="dashTitleRow">
+          <div class="dashTitle" data-i18n="dash_title" style="margin:0;">Dashboard Kota Nusapura</div>
+          <button class="iconBtn" id="btnDashToggle" onclick="toggleCleanFocusMode()" style="font-size:10.5px;padding:4px 8px;">Mode Ringkas</button>
+        </div>
+                <!-- 3 CORE VITAL SIGNS (PENYEDERHANAAN TAMPILAN ANGKA & TONJOLKAN STATUS KUNCI) -->
+        <div id="coreVitalSignsBox" class="coreVitalGrid">
+          <div class="vitalCard">
+            <div class="vitalHeader">
+              <span class="vitalIcon">🌟</span>
+              <span class="vitalTitle" data-i18n="vital_approval">Kepuasan Warga</span>
+            </div>
+            <div class="vitalValue" id="vitalApprovalVal">72%</div>
+            <div class="vitalBadge" id="vitalApprovalBadge" style="background:rgba(34,197,94,0.2);color:#86efac;">🟢 Sangat Positif</div>
+          </div>
+          <div class="vitalCard">
+            <div class="vitalHeader">
+              <span class="vitalIcon">💰</span>
+              <span class="vitalTitle" data-i18n="vital_apbd">Kas Daerah</span>
+            </div>
+            <div class="vitalValue" id="vitalApbdVal">Rp 3.8 T</div>
+            <div class="vitalBadge" id="vitalApbdBadge" style="background:rgba(34,197,94,0.2);color:#86efac;">🟢 Surplus Stabil</div>
+          </div>
+          <div class="vitalCard">
+            <div class="vitalHeader">
+              <span class="vitalIcon">⚖️</span>
+              <span class="vitalTitle" data-i18n="vital_stability">Stabilitas Politik</span>
+            </div>
+            <div class="vitalValue" id="vitalStabilityVal">Kondusif</div>
+            <div class="vitalBadge" id="vitalStabilityBadge" style="background:rgba(59,130,246,0.2);color:#93c5fd;">🛡️ Koalisi Aman</div>
+          </div>
+        </div>
+        <div class="sectorToggleRow">
+          <button class="sectorToggleBtn" id="btnToggleSectorDetails" onclick="toggleSectorDetails()">
+            <span id="sectorToggleIcon">▾</span> <span id="sectorToggleText" data-i18n="toggle_sectors_show">Tampilkan Rincian 12 Indikator Sektoral</span>
+          </button>
+        </div>
+        <div class="indGrid" id="indGridContainer" style="display:none;">
+          <div class="indItem"><div class="indHead"><span data-i18n="ind_unemp">Pengangguran</span><span class="indVal" id="gPengangguranVal">7</span></div><div class="indBarTrack"><div class="indBarFill" id="gPengangguranBar" style="width:70%"></div></div></div>
+          <div class="indItem"><div class="indHead"><span data-i18n="ind_pov">Kemiskinan</span><span class="indVal" id="gKemiskinanVal">8</span></div><div class="indBarTrack"><div class="indBarFill" id="gKemiskinanBar" style="width:70%"></div></div></div>
+          <div class="indItem"><div class="indHead"><span data-i18n="ind_inf">Inflasi</span><span class="indVal" id="gInflasiVal">3</span></div><div class="indBarTrack"><div class="indBarFill" id="gInflasiBar" style="width:75%"></div></div></div>
+          <div class="indItem"><div class="indHead"><span data-i18n="ind_traffic">Kemacetan</span><span class="indVal" id="gKemacetanVal">65</span></div><div class="indBarTrack"><div class="indBarFill" id="gKemacetanBar" style="width:35%"></div></div></div>
+          <div class="indItem"><div class="indHead"><span data-i18n="ind_poll">Polusi</span><span class="indVal" id="gPolusiVal">55</span></div><div class="indBarTrack"><div class="indBarFill" id="gPolusiBar" style="width:45%"></div></div></div>
+          <div class="indItem"><div class="indHead"><span data-i18n="ind_inv">Investasi</span><span class="indVal" id="gInvestasiVal">50</span></div><div class="indBarTrack"><div class="indBarFill" id="gInvestasiBar" style="width:50%"></div></div></div>
+          <div class="indItem"><div class="indHead"><span data-i18n="ind_crime">Kriminalitas</span><span class="indVal" id="gKriminalitasVal">50</span></div><div class="indBarTrack"><div class="indBarFill" id="gKriminalitasBar" style="width:50%"></div></div></div>
+          <div class="indItem"><div class="indHead"><span data-i18n="ind_flood">Risiko Banjir</span><span class="indVal" id="gBanjirVal">50</span></div><div class="indBarTrack"><div class="indBarFill" id="gBanjirBar" style="width:50%"></div></div></div>
+          <div class="indItem"><div class="indHead"><span data-i18n="ind_edu">Pendidikan</span><span class="indVal" id="gPendidikanVal">55</span></div><div class="indBarTrack"><div class="indBarFill" id="gPendidikanBar" style="width:55%"></div></div></div>
+          <div class="indItem"><div class="indHead"><span data-i18n="ind_health">Kesehatan</span><span class="indVal" id="gKesehatanVal">55</span></div><div class="indBarTrack"><div class="indBarFill" id="gKesehatanBar" style="width:55%"></div></div></div>
+          <div class="indItem"><div class="indHead"><span data-i18n="ind_infra">Infrastruktur</span><span class="indVal" id="gInfrastrukturVal">50</span></div><div class="indBarTrack"><div class="indBarFill" id="gInfrastrukturBar" style="width:50%"></div></div></div>
+          <div class="indItem"><div class="indHead"><span data-i18n="ind_env">Lingkungan</span><span class="indVal" id="gLingkunganVal">45</span></div><div class="indBarTrack"><div class="indBarFill" id="gLingkunganBar" style="width:45%"></div></div></div>
+        </div>
+        <div id="cleanModeNotice" style="display:none;padding:18px 14px;background:rgba(59,130,246,0.06);border:1px dashed rgba(59,130,246,0.25);border-radius:12px;text-align:center;margin-top:8px;">
+          <div style="font-size:24px;margin-bottom:6px;">📖</div>
+          <div style="font-size:13px;font-weight:700;color:var(--blue-soft);margin-bottom:4px;" id="cleanNoticeTitle" data-i18n="clean_notice_title">📖 Mode Fokus Cerita Aktif</div>
+          <div style="font-size:11.5px;color:var(--gray-400);line-height:1.5;margin-bottom:12px;" id="cleanNoticeDesc" data-i18n="clean_notice_desc">12 indikator makro disembunyikan agar Anda dapat fokus mendalami narasi peristiwa & mengambil keputusan penting.</div>
+          <button class="iconBtn" onclick="toggleCleanFocusMode()" style="font-size:11px;padding:6px 14px;background:rgba(59,130,246,0.2);border-color:#3b82f6;color:#93c5fd;font-weight:700;" data-i18n="btn_clean_notice_toggle">📊 Beralih ke Mode Lengkap</button>
+        </div>
+      </div>
+
+      <div class="sidePanel glass">
+        <div class="sideTitleRow">
+          <div class="sideTitle" data-i18n="social_title">💬 CivicNet / Suara Netizen</div>
+          <div class="sideTag" data-i18n="social_tag">Trending Publik</div>
+        </div>
+        <div class="civicNetTrendingBar" id="civicNetTrending"></div>
+        <div style="padding: 8px 12px 2px 12px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 11px; color: var(--gray-400); font-weight: 700;">LIVE FEED & SUARA WARGA</span>
+          <button class="iconBtn" onclick="openQuickTweetModal()" style="font-size: 10.5px; padding: 3px 8px; background: rgba(59,130,246,0.18); border-color: rgba(59,130,246,0.4); color: #93c5fd; font-weight: 800;">📢 Kirim Klarifikasi</button>
+        </div>
+        <div class="socialList" id="socialList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: YEAR SUMMARY ==================== -->
+<div class="modalOverlay" id="yearSummaryModal">
+  <div class="modalBox" role="dialog" aria-modal="true">
+    <h2 id="yearSummaryTitle" data-i18n="year_summary_title">Laporan Akhir Tahun</h2>
+    <p class="muted" data-i18n="year_summary_sub">Berikut ringkasan kondisi Kota Nusapura pada akhir tahun ini.</p>
+    <div id="yearSummaryBody"></div>
+    <h4 data-i18n="year_summary_growth">Perkembangan Kota</h4>
+    <div class="chartBox"><canvas id="chartMain"></canvas></div>
+    <div class="legendRow">
+      <span><span class="legendDot" style="background:#4ade80"></span><span data-i18n="legend_sat">Kepuasan Warga</span></span>
+      <span><span class="legendDot" style="background:#60a5fa"></span><span data-i18n="legend_unemp">Indeks Pengangguran</span></span>
+      <span><span class="legendDot" style="background:#facc15"></span><span data-i18n="legend_pov">Indeks Kemiskinan</span></span>
+    </div>
+    <div class="chartBox"><canvas id="chartApbd"></canvas></div>
+    <div class="legendRow">
+      <span><span class="legendDot" style="background:#38bdf8"></span><span data-i18n="legend_apbd">APBD (Triliun Rp)</span></span>
+      <span><span class="legendDot" style="background:#a78bfa"></span><span data-i18n="legend_pad">PAD (Triliun Rp)</span></span>
+    </div>
+    <div style="margin:16px 0 10px 0;background:rgba(30,58,110,0.3);border:1px solid rgba(59,130,246,0.4);border-radius:12px;padding:14px;">
+      <div style="font-size:12px;font-weight:800;color:#93c5fd;margin-bottom:8px;text-transform:uppercase;display:flex;align-items:center;gap:6px;">
+        <span data-i18n="year_summary_agenda">⚡ Agenda Strategis Akhir Tahun Walikota</span>
+        <span style="font-size:10px;background:#3b82f6;color:#fff;padding:2px 8px;border-radius:10px;" data-i18n="tag_rekomendasi">Rekomendasi</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:8px;">
+        <button class="iconBtn" onclick="openCabinetDirect('yearSummaryModal')" style="background:rgba(255,255,255,0.08);color:#fff;font-weight:700;padding:8px 10px;font-size:12px;" data-i18n="btn_eval_kadis">🗂️ Evaluasi Kadis</button>
+        <button class="iconBtn" onclick="openMusrenbangDirect('yearSummaryModal')" style="background:rgba(20,184,166,0.25);color:#5eead4;font-weight:700;padding:8px 10px;font-size:12px;" data-i18n="btn_musrenbang">📋 Usulan Musrenbang</button>
+        <button class="iconBtn" onclick="openPerdaDirect('yearSummaryModal')" style="background:rgba(217,119,6,0.25);color:#fcd34d;font-weight:700;padding:8px 10px;font-size:12px;" data-i18n="btn_terbitkan_perda">📜 Terbitkan Perda</button>
+        <button class="iconBtn" onclick="openDiplomacyDirect('yearSummaryModal')" style="background:rgba(14,165,233,0.25);color:#7dd3fc;font-weight:700;padding:8px 10px;font-size:12px;" data-i18n="btn_lobi_dak">🏛️ Lobi DAK Pusat</button>
+        <button class="iconBtn" onclick="openParipurnaDirect('yearSummaryModal')" style="background:rgba(147,51,234,0.25);color:#c084fc;font-weight:700;padding:8px 10px;font-size:12px;" data-i18n="btn_paripurna_dprd">🏛️ Paripurna DPRD</button>
+        <button class="iconBtn" onclick="openPressDirect('yearSummaryModal')" style="background:rgba(59,130,246,0.25);color:#93c5fd;font-weight:700;padding:8px 10px;font-size:12px;" data-i18n="btn_konpers_akhir">🎙️ Konferensi Pers</button>
+      </div>
+    </div>
+    <div class="modalActions">
+      <button class="bigBtn" id="btnYearNext" data-i18n="btn_year_next">Lanjutkan ke Tahun Berikutnya →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: ENDING REPORT ==================== -->
+<div class="modalOverlay" id="endingModal">
+  <div class="modalBox" role="dialog" aria-modal="true">
+    <h2>🏛️ Laporan Akhir Karier Politik</h2>
+    <p class="muted">Inilah warisan kepemimpinan Anda di Kota Nusapura.</p>
+    <div class="endingTypeHeader" id="endingTypeHeader"></div>
+
+    <!-- EPILOGUE HD ARTWORK SHOWCASE & STORY -->
+    <div class="endingEpilogueCard glass" id="endingEpilogueCard" style="margin:14px 0 16px;padding:14px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid var(--line);display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span class="sub" style="font-size:11.5px;color:#93c5fd;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;">🏛️ Koleksi Epilog Sejarah Terbuka</span>
+        <span class="gradeBadge" id="endingEpilogueBadge" style="font-size:12px;padding:2px 8px;">👑</span>
+      </div>
+      <div style="width:100%;height:150px;border-radius:10px;overflow:hidden;background:#091222;">
+        <img id="endingEpilogueImg" src="images/epilogue_negarawan.svg" alt="Epilogue Artwork" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div>
+        <div id="endingEpilogueTitle" style="font-size:15px;font-weight:800;color:#fff;margin-bottom:4px;">Sang Negarawan Agung</div>
+        <div id="endingEpilogueStory" style="font-size:12.5px;color:var(--gray-300);line-height:1.45;">Warisan kepemimpinan Anda abadi dalam tinta emas sejarah Kota Nusapura.</div>
+      </div>
+      <button class="menuBtn" onclick="GalleryManager.openGalleryModal()" style="margin-top:6px;padding:8px 12px;font-size:12px;display:flex;align-items:center;justify-content:center;gap:6px;">
+        <span>🏛️</span> <span>Buka Galeri Epilog Lengkap (12 Koleksi)</span>
+      </button>
+    </div>
+
+    <div class="scoreRow">
+      <div class="scoreCircle" id="scoreCircle" style="--sc:0;">
+        <div class="scoreInner"><b id="endingScore">0</b><span>SKOR</span></div>
+      </div>
+      <div>
+        <div class="gradeBadge" id="endingGrade">C</div>
+      </div>
+      <div>
+        <div class="muted" style="font-size:12px;">Gelar Kehormatan</div>
+        <div class="titleBadge" id="endingTitle">Walikota Nusapura</div>
+      </div>
+    </div>
+
+    <h4>Kondisi Akhir Kota</h4>
+    <div id="endingStats"></div>
+
+    <h4>Perkembangan Selama Masa Jabatan</h4>
+    <div class="chartBox"><canvas id="chartEnding"></canvas></div>
+    <div class="legendRow">
+      <span><span class="legendDot" style="background:#4ade80"></span>Kepuasan Warga</span>
+      <span><span class="legendDot" style="background:#60a5fa"></span>Indeks Pengangguran</span>
+      <span><span class="legendDot" style="background:#facc15"></span>Indeks Kemiskinan</span>
+    </div>
+
+    <div id="endingPromises"></div>
+    <div id="endingTermHistory"></div>
+    <div id="endingAchievements"></div>
+    <div id="endingDecisions"></div>
+
+    <div class="modalActions">
+      <button class="bigBtn" id="btnRestartEnding">🔄 Mulai Karier Politik Baru</button>
+      <button class="bigBtn secondary" id="btnEndingMenu">🏠 Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: ACHIEVEMENTS ==================== -->
+<div class="modalOverlay" id="achModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('achModal')">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="ach_modal_title">🏆 Pencapaian Karier</h2>
+        <p class="muted" data-i18n="ach_modal_sub">Kumpulkan pencapaian dengan mengelola Kota Nusapura secara bijak.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseAch">✕</button>
+    </div>
+    <div class="achList" id="achModalBody" style="flex:1;overflow-y:auto;padding-right:6px;"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('achModal')" data-i18n="btn_back_main">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: GALERI EPILOG AKHIR JABATAN (12 ENDING KOLEKSI) ==================== -->
+<div class="modalOverlay" id="galleryModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="GalleryManager.closeGalleryModal()">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="gallery_modal_title">🏛️ Galeri Epilog Akhir Jabatan</h2>
+        <p class="muted" data-i18n="gallery_modal_sub">Koleksi 12 takdir sejarah & warisan kepemimpinan politik Anda di Kota Nusapura.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" onclick="GalleryManager.closeGalleryModal()">✕</button>
+    </div>
+    
+    <div class="galleryToolbarRow" style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+      <div id="galleryCounter" style="font-size:13px;font-weight:800;color:#93c5fd;background:rgba(59,130,246,0.18);padding:4px 12px;border-radius:20px;border:1px solid rgba(59,130,246,0.35);">
+        0 / 12 Epilog Terkoleksi
+      </div>
+      <div class="galleryFilterTabs" style="display:flex;gap:6px;">
+        <button class="iconBtn" onclick="GalleryManager.renderGallery('all')" style="font-size:11.5px;padding:6px 12px;background:rgba(255,255,255,0.08);">Semua (12)</button>
+        <button class="iconBtn" onclick="GalleryManager.renderGallery('unlocked')" style="font-size:11.5px;padding:6px 12px;background:rgba(34,197,94,0.18);color:#86efac;">Terbuka</button>
+        <button class="iconBtn" onclick="GalleryManager.renderGallery('locked')" style="font-size:11.5px;padding:6px 12px;background:rgba(239,68,68,0.18);color:#fca5a5;">Terkunci</button>
+      </div>
+    </div>
+
+    <div class="galleryGrid" id="galleryGrid" style="flex:1;overflow-y:auto;padding-right:4px;"></div>
+    
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="GalleryManager.closeGalleryModal()">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: DETAIL EPILOG & ILUSTRASI HD ==================== -->
+<div class="modalOverlay" id="galleryDetailModal">
+  <div class="modalBox" role="dialog" aria-modal="true" style="max-width:680px;padding:0;overflow:hidden;border-radius:18px;">
+    <div style="position:relative;width:100%;aspect-ratio:16/9;background:#0f172a;overflow:hidden;">
+      <img id="galleryDetailImg" src="images/epilogue_negarawan.svg" alt="Ilustrasi Epilog" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
+      <button class="closeX" aria-label="Tutup" onclick="GalleryManager.closeDetail()" style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.6);border-radius:50%;">✕</button>
+      <div id="galleryDetailStatus" style="position:absolute;bottom:12px;left:14px;background:rgba(15,23,42,0.92);padding:4px 12px;border-radius:12px;font-size:12px;font-weight:800;border:1px solid rgba(255,255,255,0.2);">
+        ✅ Terbuka
+      </div>
+    </div>
+    <div style="padding:20px 22px;">
+      <h3 id="galleryDetailTitle" style="margin:0 0 8px;font-size:18px;color:#fff;">Sang Negarawan Agung</h3>
+      <p id="galleryDetailDesc" style="color:#cbd5e1;font-size:13.5px;line-height:1.6;margin:0 0 16px;"></p>
+      
+      <div style="background:rgba(59,130,246,0.08);border:1px dashed rgba(59,130,246,0.3);border-radius:12px;padding:12px 14px;margin-bottom:16px;">
+        <div style="font-size:11px;font-weight:800;color:#93c5fd;text-transform:uppercase;margin-bottom:4px;">Syarat Pembukaan Epilog:</div>
+        <div id="galleryDetailCriteria" style="font-size:12.5px;color:#e2e8f0;"></div>
+      </div>
+      
+      <button class="bigBtn primary" onclick="GalleryManager.closeDetail()" style="width:100%;">Tutup Tinjauan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: ACTORS ==================== -->
+<div class="modalOverlay" id="actorsModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('actorsModal')">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="actors_modal_title">👥 Aktor & Stakeholder Politik</h2>
+        <p class="muted" data-i18n="actors_modal_sub">Hubungan Anda dengan 19 aktor utama menentukan respons publik, media, dan dinamika politik daerah.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseActors">✕</button>
+    </div>
+    <div class="v3List" id="actorsModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('actorsModal')">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: CABINET ==================== -->
+<div class="modalOverlay" id="cabinetModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('cabinetModal')">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="cabinet_modal_title">🗂️ Kabinet Pemerintahan</h2>
+        <p class="muted" data-i18n="cabinet_modal_sub">11 pejabat inti membantu menjalankan roda pemerintahan Kota Nusapura. Rapat kabinet digelar otomatis setiap akhir tahun.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseCabinet">✕</button>
+    </div>
+    <div class="v3List" id="cabinetModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('cabinetModal')">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: RAPAT KABINET TAHUNAN ==================== -->
+<div class="modalOverlay" id="cabinetMeetingModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <h2 id="cabinetMeetingTitle">🏛️ Rapat Kabinet Tahunan</h2>
+    <p class="muted">Setiap kepala OPD melaporkan kondisi bidangnya berdasarkan data kota saat ini.</p>
+    <div class="v3List" id="cabinetMeetingBody"></div>
+    <div class="v3Row" style="margin-top:12px;background:rgba(59,124,246,0.10);border-color:rgba(59,124,246,0.35);">
+      <div class="v3RowHead">📋 Rekomendasi Kabinet</div>
+      <div class="v3RowSub" id="cabinetMeetingRecommend"></div>
+    </div>
+    <div class="modalActions">
+      <button class="bigBtn" id="btnCabinetFollow">✅ Ikuti Rekomendasi</button>
+      <button class="iconBtn" id="btnCabinetIgnore">➡️ Jalankan Rencana Sendiri</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: MUTASI & ROTASI PEJABAT KABINET ==================== -->
+<div class="modalOverlay" id="cabinetMutateModal" style="display:none;z-index:3500;">
+  <div class="modalBox" role="dialog" aria-modal="true" style="max-width:540px;border-color:rgba(245,181,68,0.4);background:linear-gradient(135deg,rgba(15,23,42,0.98),rgba(32,24,12,0.98));">
+    <div class="modalHeaderRow">
+      <div class="modalHeaderTitleGroup">
+        <h2 id="mutateModalTitle" style="color:#fde68a;">🔄 Mutasi & Rotasi Pejabat Daerah</h2>
+        <p class="muted" id="mutateModalSub">Surat Keputusan (SK) Walikota Pengalihan Tugas Jabatan Pimpinan Tinggi Pratama (Eselon II).</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" onclick="closeCabinetMutateModal()">✕</button>
+    </div>
+
+    <div id="mutateCurrentOfficerCard" style="margin-bottom:12px;"></div>
+
+    <!-- TABS: GANTI PEJABAT (STAF AHLI) VS ROTASI SILANG ANTAR-DINAS -->
+    <div style="display:flex;gap:8px;margin-bottom:12px;background:rgba(0,0,0,0.28);padding:4px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);">
+      <button id="mutateTabBtnReplace" class="dossierTabBtn active" onclick="switchMutateMode('replace')" style="flex:1;text-align:center;padding:8px 6px;font-size:12px;">
+        <span>👔</span> <span id="mutateTabReplaceLabel">Ganti Pejabat (Ke Staf Ahli)</span>
+      </button>
+      <button id="mutateTabBtnSwap" class="dossierTabBtn" onclick="switchMutateMode('swap')" style="flex:1;text-align:center;padding:8px 6px;font-size:12px;">
+        <span>🔄</span> <span id="mutateTabSwapLabel">Rotasi Silang Antar-Dinas</span>
+      </button>
+    </div>
+
+    <!-- BODY CONTENT -->
+    <div id="mutateModalBodyArea"></div>
+
+    <div class="modalActions" style="margin-top:14px;flex-wrap:wrap;">
+      <button class="bigBtn" id="btnExecuteMutate" onclick="confirmExecuteCabinetMutate()" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#0f172a;font-weight:900;border:none;">📜 Terbitkan SK Mutasi</button>
+      <button class="iconBtn" onclick="closeCabinetMutateModal()">Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: KONFIRMASI IN-APP ==================== -->
+<div class="modalOverlay" id="v3ConfirmModal">
+  <div class="modalBox" role="dialog" aria-modal="true" style="max-width:420px;">
+    <h2 id="v3ConfirmTitle">Konfirmasi</h2>
+    <p class="muted" id="v3ConfirmBody"></p>
+    <div class="modalActions">
+      <button class="bigBtn" id="v3ConfirmYes">Ya, Lanjutkan</button>
+      <button class="iconBtn" id="v3ConfirmNo">Batal</button>
+    </div>
+  </div>
+</div>
+
+<div class="modalOverlay" id="scandalModal">
+  <div class="modalBox" role="dialog" aria-modal="true">
+    <h2 id="scandalTitle">🚨 Skandal Pejabat</h2>
+    <div id="scandalBody"></div>
+    <p class="muted" style="margin-top:10px;">Tidak ada pilihan yang benar/salah mutlak — masing-masing punya konsekuensi ringan berbeda.</p>
+    <div class="modalActions" style="flex-wrap:wrap;">
+      <button class="bigBtn" id="btnScandalPecat">🚫 Pecat</button>
+      <button class="iconBtn" id="btnScandalMutasi">🔄 Mutasi</button>
+      <button class="iconBtn" id="btnScandalLindungi">🛡️ Lindungi</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: KONFLIK KEPENTINGAN ==================== -->
+<div class="modalOverlay" id="conflictModal">
+  <div class="modalBox" role="dialog" aria-modal="true">
+    <h2>⚖️ Dugaan Konflik Kepentingan</h2>
+    <div id="conflictBody"></div>
+    <p class="muted" style="margin-top:10px;">Anda bisa menyelidikinya lewat Audit Inspektorat (berlangsung bertahap), atau tidak menindaklanjuti untuk saat ini.</p>
+    <div class="modalActions">
+      <button class="bigBtn" id="btnConflictInvestigate">🔍 Selidiki (Mulai Audit)</button>
+      <button class="iconBtn" id="btnConflictIgnore">➡️ Belum Perlu</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: AUDIT ==================== -->
+<div class="modalOverlay" id="auditModal">
+  <div class="modalBox" role="dialog" aria-modal="true">
+    <h2 id="auditTitle">🔍 Audit Berjalan</h2>
+    <div id="auditBody"></div>
+    <div class="modalActions" style="flex-wrap:wrap;" id="auditActions"></div>
+  </div>
+</div>
+
+
+<!-- ==================== MODAL: MUSRENBANG USULAN WARGA ==================== -->
+<div class="modalOverlay" id="musrenbangModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('musrenbangModal')">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="musren_modal_title">🤝 Musrenbang Usulan Warga Kota</h2>
+        <p class="muted" data-i18n="musren_modal_sub">Musyawarah Perencanaan Pembangunan: Tentukan usulan prioritas warga 5 kecamatan resmi Nusapura (Sentral, Nusajaya, Cakrawala, Bahari, dan Bukit Asri) yang akan diakomodir APBD.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" onclick="returnFromSubModal('musrenbangModal')">✕</button>
+    </div>
+    <div id="musrenbangModalBody" class="v3List"></div>
+    <div class="modalFooterRow" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div id="musrenbangBudgetInfo" style="font-size:12px;color:var(--gray-300);"></div>
+      <div style="display:flex;gap:8px;">
+        <button class="bigBtn secondary" onclick="returnFromSubModal('musrenbangModal')">Tutup</button>
+        <button class="bigBtn" id="btnExecuteMusrenbang" onclick="executeMusrenbang()">✅ Akomodir Usulan Terpilih</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: SELEKSI TERBUKA KADIS OPD ==================== -->
+<div class="modalOverlay" id="openBiddingModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="closeOpenBiddingModal()">← Kembali ke Kabinet</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 id="openBiddingTitle">🎯 Seleksi Terbuka Kepala Dinas</h2>
+        <p class="muted" id="openBiddingSub">Pilih pejabat terbaik dari 3 profil latar belakang yang berbeda untuk memimpin dinas.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" onclick="closeOpenBiddingModal()">✕</button>
+    </div>
+    <div id="openBiddingBody" class="v3List"></div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: PANDUAN ISTILAH AWAM ==================== -->
+<!-- ==================== MODAL: DPRD ==================== -->
+<div class="modalOverlay" id="dprdModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('dprdModal')">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="dprd_modal_title">🏛️ DPRD Kota Nusapura</h2>
+        <p class="muted" data-i18n="dprd_modal_sub">6 fraksi mewakili aspirasi warga dan menentukan dukungan politik terhadap kebijakan Anda.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseDPRD">✕</button>
+    </div>
+    <div class="v3List" id="dprdModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('dprdModal')">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: MEGASTRUCTURES (POINT 7) ==================== -->
+<div class="modalOverlay" id="megastructuresModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('megastructuresModal')">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="megastructures_modal_title">🏗️ Pusat Proyek Megastruktur Kota</h2>
+        <p class="muted" data-i18n="megastructures_modal_sub">Investasikan dana APBD untuk membangun landmark & infrastruktur strategis skala besar Kota Nusapura.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseMegastructures">✕</button>
+    </div>
+    <div class="v3List" id="megastructuresModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('megastructuresModal')">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: E-KATALOG & LELANG PROYEK (FITUR 5) ==================== -->
+<div class="modalOverlay" id="procurementModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('procurementModal')">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="procurement_modal_title">📦 Sistem E-Katalog & Lelang Proyek Daerah</h2>
+        <p class="muted" data-i18n="procurement_modal_sub">Pilih konsorsium vendor lelang proyek kota. Pertimbangkan biaya APBD, kualitas hasil, hubungan politik DPRD, dan risiko tindak pidana korupsi.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseProcurement">✕</button>
+    </div>
+    <div class="v3List" id="procurementModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('procurementModal')">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: DIPLOMASI PUSAT & DAK/PSN (FITUR 6) ==================== -->
+<div class="modalOverlay" id="centralDiplomacyModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('centralDiplomacyModal')">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="central_modal_title">🏛️ Kunjungan Kerja & Lobi Pemerintah Pusat (DAK/PSN)</h2>
+        <p class="muted" data-i18n="central_modal_sub">Lobi Kemenkeu, Bappenas, dan Gubernur Provinsi untuk usulan DAK, insentif Proyek Strategis Nasional (PSN), dan Bantuan Keuangan Daerah.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseCentral">✕</button>
+    </div>
+    <div class="v3List" id="centralDiplomacyModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('centralDiplomacyModal')">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: PERDA BUILDER (POINT 5) ==================== -->
+<div class="modalOverlay" id="perdaModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('perdaModal')">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="perda_modal_title">📜 Pusat Kebijakan & Peraturan Daerah (Perda)</h2>
+        <p class="muted" data-i18n="perda_modal_sub">Aktifkan Peraturan Daerah khusus untuk memberikan dampak berkelanjutan pada indikator kota dan kepuasan warga.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnClosePerdas">✕</button>
+    </div>
+    <div class="v3List" id="perdaModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('perdaModal')">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: SIDANG PARIPURNA & NEGOSIASI FRAKSI DPRD (FITUR 2) ==================== -->
+<div class="modalOverlay" id="dprdParipurnaModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('dprdParipurnaModal')" id="btnBackParipurna">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 id="dprdModalTitleHeader">🏛️ Sidang Paripurna & Negosiasi Fraksi DPRD</h2>
+        <p class="muted" id="dprdModalSubHeader">Ruang Parlemen Kota Nusapura (50 Kursi). Lobi 4 fraksi politik untuk mengamankan kuorum minimal 26 suara pengesahan!</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseParipurna" onclick="returnFromSubModal('dprdParipurnaModal')">✕</button>
+    </div>
+    <div id="dprdParipurnaBody" style="flex:1;overflow-y:auto;padding-right:4px;"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('dprdParipurnaModal')" id="dprdFooterBackBtn" data-i18n="btn_back">← Kembali</button>
+      <button class="bigBtn" id="btnStartRollCallVote" onclick="startDprdRollCallVote()" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);font-weight:900;" data-i18n="btn_dprd_vote">🔨 Ketuk Palu: Mulai Pemungutan Suara Paripurna</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: PRESS CONFERENCE MINI-GAME (POINT 2) ==================== -->
+<div class="modalOverlay" id="pressModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('pressModal')" data-i18n="btn_back">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="press_modal_title">🎙️ Konferensi Pers & Doorstop Wartawan</h2>
+        <p class="muted" data-i18n="press_modal_sub">Hadapi jurnalis kritis dalam hitungan mundur 10 detik, jawab dengan tepat demi reputasi & opini publik!</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnClosePress">✕</button>
+    </div>
+    <div class="pressCountdownWrap">
+      <div class="pressCountdownBar" id="pressCountdownBar"></div>
+    </div>
+    <div class="v3List" id="pressModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('pressModal')" data-i18n="btn_back_main">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: EMERGENCY RESPONSE MODE (POINT 3) ==================== -->
+<div class="modalOverlay" id="emergencyModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('emergencyModal')" data-i18n="btn_back">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="emergency_modal_title">🚨 Peta Komando Taktis Tanggap Darurat & BPBD</h2>
+        <p class="muted" data-i18n="emergency_modal_sub">Pantau status bahaya di 4 distrik kota dan gerakkan unit reaksi cepat darurat secara presisi!</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseEmergency">✕</button>
+    </div>
+    <div id="emergencyModalBody" style="flex:1;overflow-y:auto;padding-right:4px;"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('emergencyModal')" data-i18n="btn_back_main">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: CAMPAIGN & ELECTION DEBATES (FEATURE 2) ==================== -->
+<div class="modalOverlay" id="campaignModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('campaignModal')" data-i18n="btn_back">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="campaign_modal_title">🗳️ Arena Debat & Kampanye Pilkada Nusapura</h2>
+        <p class="muted" data-i18n="campaign_modal_sub">Adu visi-misi dengan calon oposisi, atur strategi kampanye per kecamatan, dan tingkatkan elektabilitas politik!</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseCampaign">✕</button>
+    </div>
+    <div class="v3List" id="campaignModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('campaignModal')" data-i18n="btn_back_main">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: CITIZEN REPORTS & DISPOSITIONS (FEATURE 3) ==================== -->
+<div class="modalOverlay" id="reportsModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('reportsModal')" data-i18n="btn_back">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="reports_modal_title">📱 Pusat Lapor Walikota & Disposisi Warga (112)</h2>
+        <p class="muted" data-i18n="reports_modal_sub">Respon keluhan warga secara langsung, tangani aduan publik, dan beri perintah disposisi cepat ke kepala dinas!</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseReports">✕</button>
+    </div>
+    <div class="v3List" id="reportsModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('reportsModal')" data-i18n="btn_back_main">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: INVESTMENT & TRADE HUB (FEATURE 4) ==================== -->
+<div class="modalOverlay" id="investmentModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('investmentModal')" data-i18n="btn_back">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="investment_modal_title">📈 Hub Investasi Industri & Perdagangan Kota</h2>
+        <p class="muted" data-i18n="investment_modal_sub">Tarik investor domestik & asing, bangun Kawasan Ekonomi Khusus (KEK), dan tingkatkan PDRB Kota Nusapura!</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseInvestment">✕</button>
+    </div>
+    <div class="v3List" id="investmentModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('investmentModal')" data-i18n="btn_back_main">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: INTEGRITY & ANTI-CORRUPTION AUDIT (FEATURE 5) ==================== -->
+<div class="modalOverlay" id="integrityModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('integrityModal')" data-i18n="btn_back">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="integrity_modal_title">🛡️ Audit BPK & Sistem Anti-Korupsi Transparan</h2>
+        <p class="muted" data-i18n="integrity_modal_sub">Terapkan E-Budgeting, audit pengadaan APBD, tangani risiko kebocoran anggaran, dan raih Opini WTP dari BPK!</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseIntegrity">✕</button>
+    </div>
+    <div class="v3List" id="integrityModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('integrityModal')" data-i18n="btn_back_main">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: MAYOR PERSONAL LIFE ==================== -->
+<div class="modalOverlay" id="lifeModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('lifeModal')" data-i18n="btn_back">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="life_modal_title">👤 Kehidupan & Karir Pribadi Walikota</h2>
+        <p class="muted" data-i18n="life_modal_sub">Kelola kesehatan, tingkat stres, aset pribadi, hubungan keluarga, serta investasi kehidupan Walikota Nusapura!</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseLife">✕</button>
+    </div>
+    <div class="v3List" id="lifeModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('lifeModal')" data-i18n="btn_back_main">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: DPRD IMPEACHMENT TRIAL ==================== -->
+<div class="modalOverlay" id="impeachmentModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <div class="modalHeaderTitleGroup">
+        <h2 style="color:#ef4444;" data-i18n="impeach_header">🏛️ SIDANG PEMAKZULAN WALIKOTA OLEH DPRD</h2>
+        <p class="muted" data-i18n="impeach_sub">Oposisi dan fraksi DPRD mengajukan Hak Angket Impeachment! Lakukan manuver politik untuk menyelamatkan jabatan Anda!</p>
+      </div>
+    </div>
+    <div class="v3List" id="impeachmentModalBody"></div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: KPK / COURT INVESTIGATION ==================== -->
+<div class="modalOverlay" id="kpkTrialModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <div class="modalHeaderTitleGroup">
+        <h2 style="color:#f59e0b;" data-i18n="kpk_modal_header">🔍 SURAT PANGGILAN KORUPSI & PEMERIKSAAN KPK</h2>
+        <p class="muted" data-i18n="kpk_modal_sub">KPK dan Pengadilan Tipikor mendeteksi indikasi penyimpangan kas / kekayaan. Tentukan strategi hukum Anda!</p>
+      </div>
+    </div>
+    <div class="v3List" id="kpkTrialModalBody"></div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: ANNUAL LIFE EVENT ==================== -->
+<div class="modalOverlay" id="lifeEventModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true" style="max-width:550px;">
+    <div class="modalHeaderRow">
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="life_modal_header">🎭 PERISTIWA KEHIDUPAN WALIKOTA</h2>
+        <p class="muted" data-i18n="life_modal_sub">Dinamika kehidupan keluarga dan karir politik pribadi Anda tahun ini.</p>
+      </div>
+    </div>
+    <div id="lifeEventModalBody"></div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: BUDGET PLANNER ==================== -->
+<div class="modalOverlay" id="budgetModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('budgetModal')" data-i18n="btn_back">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="budget_modal_title">💰 Simulasi RAPBD & Anggaran Daerah</h2> <span class="v3InfoIcon" data-term="apbd">i</span>
+        <p class="muted" data-i18n="budget_modal_sub">Atur alokasi belanja daerah secara dinamis. Total alokasi harus 100%. Pantau dampak instan terhadap keuangan dan kepuasan warga!</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseBudget">✕</button>
+    </div>
+    <div class="budgetPresetRow">
+      <span style="font-size:11px;color:var(--gray-400);align-self:center;font-weight:700;" data-i18n="budget_preset_label">PRESET STRATEGIS:</span>
+      <button class="budgetPresetBtn" onclick="applyBudgetPreset('rakyat')" data-i18n="budget_preset_rakyat">🌾 Pro-Rakyat & Bansos</button>
+      <button class="budgetPresetBtn" onclick="applyBudgetPreset('infra')" data-i18n="budget_preset_infra">🏗️ Infrastruktur Masif</button>
+      <button class="budgetPresetBtn" onclick="applyBudgetPreset('integritas')" data-i18n="budget_preset_integritas">🛡️ Anti-Korupsi & Integritas</button>
+      <button class="budgetPresetBtn" onclick="applyBudgetPreset('seimbang')" data-i18n="budget_preset_seimbang">⚖️ Kebijakan Seimbang</button>
+    </div>
+    <div id="budgetLiveForecast" class="budgetLiveForecastGrid"></div>
+    <div id="budgetBreakdown" class="v3List" style="margin-bottom:12px;"></div>
+    <div id="budgetSliders" style="flex:1;overflow-y:auto;padding-right:4px;"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('budgetModal')" data-i18n="btn_back">← Kembali</button>
+      <button class="bigBtn secondary" onclick="autoBalanceBudget()" style="border-color:var(--amber);color:var(--amber);" data-i18n="btn_budget_autobalance">⚖️ Seimbangkan Otomatis (100%)</button>
+      <button class="bigBtn" id="btnBudgetApply" data-i18n="btn_apply_budget" style="background:linear-gradient(135deg,#10b981,#059669);font-weight:900;">🔨 Sahkan RAPBD (Ketuk Palu)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: STATISTICS DASHBOARD ==================== -->
+<div class="modalOverlay" id="statsModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('statsModal')" data-i18n="btn_back">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="stats_modal_title">📊 Statistik Lengkap Kota</h2>
+        <p class="muted" data-i18n="stats_modal_sub">Tren seluruh indikator kota sejak awal masa jabatan.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseStats">✕</button>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding-right:6px;">
+      <div class="chartBox" style="margin-bottom:10px;height:200px;"><canvas id="chartStatsEcon"></canvas></div>
+      <div class="legendRow" style="margin-bottom:16px;">
+        <span><span class="legendDot" style="background:#3ecf8e"></span>Kepuasan</span>
+        <span><span class="legendDot" style="background:#f2596b"></span>Kemiskinan</span>
+        <span><span class="legendDot" style="background:#f5b544"></span>Pengangguran</span>
+      </div>
+      <div class="chartBox" style="margin-bottom:10px;height:200px;"><canvas id="chartStatsInfra"></canvas></div>
+      <div class="legendRow">
+        <span><span class="legendDot" style="background:#3b7cf6"></span>Infrastruktur</span>
+        <span><span class="legendDot" style="background:#7fe0b3"></span>Pendidikan</span>
+        <span><span class="legendDot" style="background:#5a8bff"></span>Kesehatan</span>
+        <span><span class="legendDot" style="background:#f5b544"></span>Lingkungan</span>
+      </div>
+      <div id="statsSummary" style="margin-top:14px;"></div>
+    </div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('statsModal')" data-i18n="btn_back_main">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: POLICY ENCYCLOPEDIA ==================== -->
+<div class="modalOverlay" id="encyclopediaModal">
+  <div class="modalBox fullModal" role="dialog" aria-modal="true">
+    <div class="modalHeaderRow">
+      <button class="backMenuBtn" onclick="returnFromSubModal('encyclopediaModal')" data-i18n="btn_back">← Kembali</button>
+      <div class="modalHeaderTitleGroup">
+        <h2 data-i18n="encyc_modal_title">📖 Ensiklopedia Tata Kelola & Politik</h2>
+        <p class="muted" data-i18n="encyc_modal_sub">Glosarium lengkap istilah teknis pemerintahan daerah, anggaran, dan politik Indonesia.</p>
+      </div>
+      <button class="closeX" aria-label="Tutup" id="btnCloseEncyclopedia">✕</button>
+    </div>
+
+    <!-- Search Box -->
+    <div class="encycSearchBox">
+      <input type="text" id="encycSearchInput" class="encycSearchInput" placeholder="🔍 Cari istilah (contoh: APBD, DAK, PAD, DPRD, Musrenbang, SILPA)..." oninput="handleEncyclopediaSearch(this.value)">
+    </div>
+
+    <!-- Category Filters -->
+    <div class="encycFilterWrap" id="encycFilterWrap">
+      <button class="encycFilterBtn active" data-cat="all" onclick="filterEncyclopediaCategory('all')" data-i18n="encyc_cat_all">🌟 Semua (All)</button>
+      <button class="encycFilterBtn" data-cat="keuangan" onclick="filterEncyclopediaCategory('keuangan')" data-i18n="encyc_cat_finance">💰 Keuangan & APBD</button>
+      <button class="encycFilterBtn" data-cat="lembaga" onclick="filterEncyclopediaCategory('lembaga')" data-i18n="encyc_cat_institution">🏛️ Lembaga & Aktor</button>
+      <button class="encycFilterBtn" data-cat="regulasi" onclick="filterEncyclopediaCategory('regulasi')" data-i18n="encyc_cat_regulation">📜 Regulasi & Birokrasi</button>
+      <button class="encycFilterBtn" data-cat="layanan" onclick="filterEncyclopediaCategory('layanan')" data-i18n="encyc_cat_service">🏗️ Pelayanan & Proyek</button>
+    </div>
+
+    <div class="v3List" id="encyclopediaModalBody"></div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" onclick="returnFromSubModal('encyclopediaModal')" data-i18n="btn_back_main">← Kembali ke Menu Utama</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: GOVERNANCE TERM INTERACTIVE TOOLTIP ==================== -->
+<div class="modalOverlay" id="termTooltipModal">
+  <div class="modalBox" role="dialog" aria-modal="true">
+    <button class="closeX" aria-label="Tutup" onclick="closeTermTooltip()">✕</button>
+    <div class="termTooltipHeader">
+      <div class="termTooltipIcon" id="termTooltipIcon">📜</div>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="termTooltipTitle" id="termTooltipTitle">APBD</div>
+          <span class="encycCatBadge" id="termTooltipCat">KEUANGAN</span>
+        </div>
+        <div class="termTooltipEn" id="termTooltipEn">Regional Government Budget</div>
+      </div>
+    </div>
+    <div class="termTooltipDef" id="termTooltipDef">Definisi istilah teknis pemerintahan...</div>
+    <div class="termTooltipGameplay" id="termTooltipGameplay">
+      <div><b>🎮 Relevansi Gameplay:</b></div>
+      <div id="termTooltipGameplayText">Dampak dan mekanik dalam Walikota Simulator.</div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="bigBtn" id="btnTooltipLearnMore" style="flex:1;" data-i18n="btn_encyc_read">📖 Buka di Ensiklopedia</button>
+      <button class="bigBtn secondary" onclick="closeTermTooltip()" data-i18n="btn_close">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: CORRUPTION / OTT ALERT ==================== -->
+<div class="modalOverlay" id="corruptionModal">
+  <div class="modalBox" role="dialog" aria-modal="true">
+    <button class="closeX" aria-label="Tutup" id="btnCloseCorruption">✕</button>
+    <h2 id="corruptionTitle">⚠️ Risiko Korupsi</h2>
+    <div id="corruptionModalBody"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<div class="watermark"><span class="wmLogo">🏛️</span><span>TATA NITI.APP</span><span class="wmSep">│</span><span>Dynamic Narrative Engine</span></div>
+
+<script src="data/events.js"></script>
+<script src="data/dangerous_dialogues.js"></script>
+<script src="data/personal_life_games.js"></script>
+<script src="data/translations.js"></script>
+<script src="data/mayor_data.js"></script>
+<script src="data/campaign_events.js"></script>
+<script src="data/glossary_data.js"></script>
+<script src="js/audio_manager.js"></script>
+<script src="js/gallery_manager.js"></script>
+<script src="libs/three.min.js"></script>
+<script src="js/office_3d.js"></script>
+<script src="js/app.js"></script>
+
+  <!-- MODAL HASIL PERCAKAPAN BERBAHAYA -->
+  <div id="dangerousOutcomeModal" class="modalBackdrop" style="display:none;">
+    <div class="modalCard dangerousOutcomeCard">
+      <div class="dangerousOutcomeHeader">
+        <span class="dangerousOutcomeTitle" id="dangerousOutcomeTitle" data-i18n="dangerous_outcome_title">🎭 HASIL PERTEMUAN RUANG TERTUTUP</span>
+        <span id="dangerousOutcomeQuarterTag" style="font-size:11px;font-weight:700;color:#fbbf24;"></span>
+      </div>
+      <div class="dangerousOutcomeBody" id="dangerousOutcomeText"></div>
+      <div class="dangerousMemoryBox" id="dangerousMemoryBox">
+        <span class="dangerousMemoryTag" data-i18n="memory_tag">📜 Konsekuensi Jangka Panjang Terpatri:</span>
+        <div class="dangerousMemoryText" id="dangerousMemoryText"></div>
+      </div>
+      <button class="dangerousProceedBtn" id="btnDangerousProceed" data-i18n="btn_dangerous_proceed" onclick="closeDangerousOutcomeModal()">Lanjutkan ke Triwulan Berikutnya →</button>
+    </div>
+  </div>
+
+  <!-- MODAL HASIL MINI GAME KEHIDUPAN PRIBADI -->
+  <div id="personalOutcomeModal" class="modalBackdrop" style="display:none;z-index:3100;align-items:center;justify-content:center;">
+    <div class="personalOutcomeCard">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <span style="font-size:13px;font-weight:900;color:#d8b4fe;" id="personalOutcomeTitle" data-i18n="personal_outcome_title">🏡 REFLEKSI KEHIDUPAN PRIBADI</span>
+        <span style="font-size:11px;font-weight:700;color:#cbd5e1;" id="personalOutcomeSemTag">Semester 1</span>
+      </div>
+      <div style="font-size:13px;line-height:1.55;color:#e2e8f0;margin-bottom:14px;" id="personalOutcomeText"></div>
+      
+      <!-- Vital Personal Stats Impact -->
+      <div class="personalVitalsGrid">
+        <div class="personalVitalItem">
+          <div class="personalVitalLabel" id="lblPersonalRel" data-i18n="lbl_personal_rel">Harmoni Keluarga</div>
+          <div class="personalVitalVal" id="personalStatRel">85%</div>
+        </div>
+        <div class="personalVitalItem">
+          <div class="personalVitalLabel" id="lblPersonalHealth" data-i18n="lbl_personal_health">Kesehatan Fisik</div>
+          <div class="personalVitalVal" id="personalStatHealth">85%</div>
+        </div>
+        <div class="personalVitalItem">
+          <div class="personalVitalLabel" id="lblPersonalStress" data-i18n="lbl_personal_stress">Tingkat Stres</div>
+          <div class="personalVitalVal" id="personalStatStress">20%</div>
+        </div>
+        <div class="personalVitalItem">
+          <div class="personalVitalLabel" id="lblPersonalWealth" data-i18n="lbl_personal_wealth">Kekayaan Pribadi</div>
+          <div class="personalVitalVal" id="personalStatWealth">Rp 1.8 M</div>
+        </div>
+      </div>
+
+      <button class="dangerousProceedBtn" id="btnPersonalProceed" data-i18n="btn_personal_proceed" style="background:linear-gradient(135deg,#a855f7,#7e22ce);margin-top:10px;" onclick="closePersonalOutcomeModal()">Lanjutkan Pengabdian Kota →</button>
+    </div>
+  </div>
+
+
+<!-- MODAL BUKU CATATAN POLITIK / POLITICAL DOSSIER -->
+<div id="politicalDossierModal" class="modalBackdrop" style="display:none;z-index:3000;background:rgba(3,7,16,0.92);align-items:center;justify-content:center;padding:14px;">
+  <div class="modalCard" style="max-width:540px;width:100%;max-height:85vh;display:flex;flex-direction:column;background:linear-gradient(135deg,rgba(15,23,42,0.98),rgba(10,15,28,0.98));border:1px solid rgba(239,68,68,0.4);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,0.8);overflow:hidden;">
+    <div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between;align-items:center;background:rgba(239,68,68,0.12);">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:24px;">📁</span>
+        <div>
+          <div style="font-size:16px;font-weight:900;color:#f8fafc;" id="dossierModalTitle" data-i18n="dossier_modal_title">Berkas Jejak Rahasia Politik</div>
+          <div style="font-size:11px;color:#cbd5e1;" id="dossierModalSubtitle" data-i18n="dossier_modal_subtitle">Catatan Kompromi, Integritas, & Bom Waktu Kekuasaan</div>
+        </div>
+      </div>
+      <button onclick="closePoliticalDossierModal()" style="background:rgba(255,255,255,0.1);border:none;color:#fff;border-radius:8px;padding:6px 12px;font-weight:800;cursor:pointer;">✕</button>
+    </div>
+    <div id="dossierModalContent" style="padding:16px 20px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:12px;">
+      <!-- Content populated by JS -->
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid rgba(255,255,255,0.08);background:rgba(10,15,28,0.6);text-align:right;">
+      <button onclick="closePoliticalDossierModal()" style="background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-weight:800;cursor:pointer;" id="btnClosePoliticalDossier">Tutup Berkas (Close)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: QUICK CIVIC TWEET / KLARIFIKASI NETIZEN ==================== -->
+<div class="modalOverlay" id="quickTweetModal">
+  <div class="modalBox" role="dialog" aria-modal="true" style="max-width:480px;">
+    <div class="modalHeaderRow">
+      <div class="modalHeaderTitleGroup">
+        <h2 id="quickTweetTitle">📢 Rilis Pernyataan Resmi Walikota</h2>
+        <p class="muted" id="quickTweetSub">Kirim siaran resmi ke linimasa CivicNet untuk merespons dinamika warganet.</p>
+      </div>
+      <button class="closeX" onclick="returnFromSubModal('quickTweetModal')">✕</button>
+    </div>
+    <div style="margin-bottom:12px;">
+      <label id="quickTweetToneLabel" style="font-size:12px;color:var(--gray-400);font-weight:700;display:block;margin-bottom:6px;">PILIH NADA PERNYATAAN:</label>
+      <select id="quickTweetTone" style="width:100%;background:#0f172a;border:1px solid var(--line);color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;outline:none;">
+        <option value="transparan">📊 Transparan & Kinerja Nyata (+Kepuasan, Biaya PR Rp 0.05 T)</option>
+        <option value="empati">🤝 Empati & Solutif Terjun ke Lapangan (+Kepuasan, Tanpa Biaya)</option>
+        <option value="tegas">⚖️ Penegakan Hukum & Disiplin ASN (+Stabilitas, +Integritas)</option>
+        <option value="optimis">🚀 Optimisme Pertumbuhan & Investasi (+Dukungan Pengusaha)</option>
+      </select>
+    </div>
+    <div style="margin-bottom:14px;">
+      <label id="quickTweetInputLabel" style="font-size:12px;color:var(--gray-400);font-weight:700;display:block;margin-bottom:6px;">CATATAN PESAN TAMBAHAN (OPSIONAL):</label>
+      <input type="text" id="quickTweetInput" placeholder="Contoh: Seluruh jajaran dinas sedang bekerja di titik banjir..." style="width:100%;background:#0f172a;border:1px solid var(--line);color:#fff;padding:10px 12px;border-radius:8px;font-size:13px;outline:none;box-sizing:border-box;">
+    </div>
+    <div class="modalFooterRow">
+      <button class="bigBtn secondary" id="quickTweetCancelBtn" onclick="returnFromSubModal('quickTweetModal')">Batal</button>
+      <button class="bigBtn" id="quickTweetBroadcastBtn" onclick="sendOfficialCivicTweet()" style="background:linear-gradient(135deg,#3b82f6,#2563eb);font-weight:800;">🚀 Siarkan ke CivicNet</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: BERKAS MAP SEKRETARIS PRIBADI & EVALUASI KEBIJAKAN ==================== -->
+<div class="modalOverlay" id="secretaryBriefingModal" style="display:none;z-index:3600;">
+  <div class="executiveDossierFolder" role="dialog" aria-modal="true">
+    <div class="dossierFolderRibbon">
+      <button class="backMenuBtn" id="secRibbonBackBtn" onclick="closeSecretaryBriefingModal()" style="font-size:11.5px;padding:5px 12px;background:rgba(212,169,79,0.18);border:1px solid #d4a94f;color:#fde68a;border-radius:6px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:4px;min-height:36px;">
+        ← Kembali ke Permainan
+      </button>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;">
+        <span class="dossierStampRed" id="secDossierStamp">RAHASIA NEGARA • TINGKAT I</span>
+        <span id="secDossierRef" style="color:#d4a94f;font-weight:700;font-size:10px;">DOKUMEN EVALUASI EKSEKUTIF</span>
+      </div>
+      <button class="closeX" aria-label="Tutup" onclick="closeSecretaryBriefingModal()" style="color:#d4a94f;font-size:20px;line-height:1;background:transparent;border:none;cursor:pointer;font-weight:900;padding:4px 8px;min-width:36px;min-height:36px;">✕</button>
+    </div>
+
+    <!-- DOSSIER HEADER WITH OFFICIAL NUSAPURA LOGO -->
+    <div class="dossierHeaderArea">
+      <div class="dossierLogoWrapper">
+        <img src="images/logo_nusapura_dark.svg" alt="Lambang Resmi Kota Nusapura" class="dossierLogoImg" loading="lazy" decoding="async">
+      </div>
+      <div class="dossierTitleCol">
+        <div class="dossierAgencyBadge" id="secDossierAgency">KANTOR WALIKOTA NUSAPURA • BIRO ADMINISTRASI PIMPINAN</div>
+        <h2 class="dossierMainTitle" id="secDossierTitle">MEMORANDUM DAMPAK KEBIJAKAN</h2>
+        <div class="dossierSubtitle" id="secDossierSub">Laporan berkas resmi Ajudan mengenai dampak Perda, kepatuhan OPD, megaproyek, dan dinamika parlemen.</div>
+      </div>
+    </div>
+
+    <!-- TABS ROW (PINNED) -->
+    <div class="dossierTabsRow" id="secDossierTabs">
+      <button class="dossierTabBtn active" id="secTabBtnSummary" onclick="switchSecretaryTab('summary')">
+        <span>📋</span> <span id="secTabSummaryLabel">Ringkasan Eksekutif</span>
+      </button>
+      <button class="dossierTabBtn" id="secTabBtnPerda" onclick="switchSecretaryTab('perda')">
+        <span>📜</span> <span id="secTabPerdaLabel">Dampak Perda</span> <span class="badge" id="secTabPerdaBadge" style="background:#0e305c;color:#fde68a;padding:1px 6px;border-radius:8px;font-size:10px;">0</span>
+      </button>
+      <button class="dossierTabBtn" id="secTabBtnCabinet" onclick="switchSecretaryTab('cabinet')">
+        <span>🗂️</span> <span id="secTabCabinetLabel">Kinerja Dinas & OPD</span>
+      </button>
+      <button class="dossierTabBtn" id="secTabBtnProjects" onclick="switchSecretaryTab('projects')">
+        <span>🏗️</span> <span id="secTabProjectsLabel">Proyek & Investasi</span>
+      </button>
+      <button class="dossierTabBtn" id="secTabBtnPolitics" onclick="switchSecretaryTab('politics')">
+        <span>🏛️</span> <span id="secTabPoliticsLabel">Parlemen & Lobi</span>
+      </button>
+    </div>
+
+    <!-- UNIFIED SCROLL CONTAINER FOR SECRETARY PROFILE, REPORTS & DISPOSITION -->
+    <div class="dossierScrollBody" id="secDossierScrollBody">
+      <!-- SECRETARY PROFILE & OPENING NOTE -->
+      <div class="secretaryProfileCard">
+        <div class="secAvatarBox">👩‍💼</div>
+        <div class="secMetaBox">
+          <div class="secName">Nadia Savitri, S.STP, M.AP</div>
+          <div class="secTitle" id="secRoleTitle">Sekretaris Pribadi & Ajudan Khusus Walikota</div>
+          <div class="secSpeechQuote" id="secSpeechQuote">"Selamat pagi Bapak/Ibu Walikota. Rekap evaluasi lapangan atas seluruh kebijakan dan dinas telah kami verifikasi untuk Anda."</div>
+        </div>
+      </div>
+
+      <!-- DYNAMIC REPORT CONTENT -->
+      <div class="dossierContentArea" id="secDossierBody">
+        <!-- Populated dynamically via JS -->
+      </div>
+
+      <!-- ACTIONABLE MAYORAL DISPOSITION -->
+      <div class="dossierDispositionBox">
+        <div class="dossierDispositionTitle">
+          <span>✍️</span> <span id="secDispositionTitle">TINDAK LANJUT & DISPOSISI EKSEKUTIF WALIKOTA</span>
+        </div>
+        <div class="dossierActionBtnsRow" id="secDispositionBtns">
+          <!-- Action Buttons populated dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER (PINNED) -->
+    <div class="dossierFooterRow">
+      <div style="font-size:11px;color:#94a3b8;" id="secFooterTime">Triwulan I • Tahun 1</div>
+      <button class="bigBtn secondary" onclick="closeSecretaryBriefingModal()" id="secBtnClose" style="padding:10px 20px;font-size:12.5px;font-weight:800;border:1px solid #d4a94f;color:#fde68a;background:linear-gradient(135deg,#0b2545,#1e3a8a);box-shadow:0 3px 10px rgba(0,0,0,0.3);cursor:pointer;min-height:44px;display:inline-flex;align-items:center;gap:6px;">
+        ← Kembali ke Permainan
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: FULL PREVIEW / BACA SELENGKAPNYA ==================== -->
+<div class="modalOverlay" id="textPreviewModal" style="display:none;z-index:3500;">
+  <div class="modalBox" role="dialog" aria-modal="true" style="max-width:540px;border-color:rgba(239,68,68,0.4);background:linear-gradient(135deg,rgba(15,23,42,0.98),rgba(24,12,18,0.98));">
+    <div class="modalHeaderRow" style="border-bottom:1px solid rgba(239,68,68,0.25);">
+      <div class="modalHeaderTitleGroup">
+        <h2 id="textPreviewModalTitle" style="color:#fca5a5;">🔍 Pratinjau Teks Lengkap</h2>
+        <p class="muted" id="textPreviewModalSubtitle">Transkrip lengkap pembicaraan & catatan situasi</p>
+      </div>
+      <button class="closeX" onclick="closeTextPreviewModal()">✕</button>
+    </div>
+    <div id="textPreviewModalBody" style="padding:14px;font-size:14px;line-height:1.6;color:#f1f5f9;white-space:normal;word-break:break-word;max-height:60vh;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:10px;border:1px solid rgba(255,255,255,0.06);margin:14px 0;">
+      <!-- Populated dynamically -->
+    </div>
+    <div class="modalFooterRow">
+      <button class="bigBtn" onclick="closeTextPreviewModal()" style="background:linear-gradient(135deg,#ef4444,#b91c1c);font-weight:800;" id="textPreviewModalCloseBtn" data-i18n="btn_close_preview">Tutup (Close)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: 3D MAYOR'S EXECUTIVE CHAMBER ==================== -->
+<div class="modalOverlay" id="office3dModal" style="display:none;z-index:3400;background:rgba(2,6,23,0.95);backdrop-filter:blur(10px);padding:0;">
+  <div class="office3dWindow" role="dialog" aria-modal="true" style="width:100%;height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden;background:#020617;">
+    
+    <!-- TOP 3D HUD BAR -->
+    <div class="office3dTopBar" style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:linear-gradient(180deg,rgba(15,23,42,0.95),rgba(15,23,42,0.7));border-bottom:1px solid rgba(255,255,255,0.12);z-index:10;gap:12px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">🏛️</span>
+        <div>
+          <div style="font-size:10px;font-weight:800;letter-spacing:1px;color:#d4af37;text-transform:uppercase;" data-i18n="office_3d_badge">RUANG KERJA EKSEKUTIF 3D</div>
+          <div id="office3dMayorName" style="font-size:15px;font-weight:900;color:#f8fafc;">Walikota Nusapura</div>
+        </div>
+      </div>
+
+      <!-- Quick status counters -->
+      <div style="display:flex;align-items:center;gap:12px;font-size:12px;">
+        <div style="background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);">
+          <span style="color:#94a3b8;" data-i18n="office_3d_term">Masa Jabatan: </span>
+          <span id="office3dTermYear" style="color:#60a5fa;font-weight:800;">Tahun ke-1</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);">
+          <span style="color:#94a3b8;">APBD: </span>
+          <span id="office3dApbd" style="color:#34d399;font-weight:800;">Rp 3.8 T</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);">
+          <span style="color:#94a3b8;">Kepuasan: </span>
+          <span id="office3dSat" style="color:#facc15;font-weight:800;">68%</span>
+        </div>
+      </div>
+
+      <!-- Time of day lighting buttons & Close button -->
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="timeToggleGroup" style="display:inline-flex;background:rgba(0,0,0,0.4);padding:2px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);">
+          <button class="timeBtn" onclick="Office3D.setTimeOfDay('day')" title="Waktu Siang (Daylight)" style="padding:4px 8px;font-size:12px;background:transparent;border:none;color:#fde047;cursor:pointer;">☀️</button>
+          <button class="timeBtn" onclick="Office3D.setTimeOfDay('sunset')" title="Waktu Senja (Sunset)" style="padding:4px 8px;font-size:12px;background:transparent;border:none;color:#fb923c;cursor:pointer;">🌇</button>
+          <button class="timeBtn" onclick="Office3D.setTimeOfDay('night')" title="Waktu Malam (Night)" style="padding:4px 8px;font-size:12px;background:transparent;border:none;color:#818cf8;cursor:pointer;">🌙</button>
+        </div>
+        <button onclick="Office3D.sitAtDesk()" title="Duduk Kembali di Meja Kerja" style="padding:6px 12px;font-size:12px;font-weight:800;background:rgba(212,169,79,0.2);border:1px solid #d4af37;color:#fde047;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;" data-i18n="office_3d_sit_btn">🪑 <span data-i18n="office_3d_sit_label">Duduk di Meja</span></button>
+        <button class="closeX" aria-label="Tutup" onclick="closeOffice3dModal()" style="font-size:22px;color:#f87171;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:8px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;">✕</button>
+      </div>
+    </div>
+
+    <!-- 3D WEBGL VIEWPORT CANVAS CONTAINER -->
+    <div id="office3dContainer" style="flex:1;width:100%;position:relative;background:#020617;touch-action:none;">
+      <!-- Gesture instructions hint -->
+      <div class="office3dHint" style="position:absolute;top:14px;left:50%;transform:translateX(-50%);background:rgba(15,23,42,0.85);backdrop-filter:blur(6px);padding:6px 16px;border-radius:20px;font-size:11px;color:#e2e8f0;border:1px solid rgba(255,255,255,0.15);pointer-events:none;z-index:5;text-align:center;max-width:90%;box-shadow:0 4px 14px rgba(0,0,0,0.4);" data-i18n="office_3d_gesture_hint">
+        👆 Geser layar untuk menoleh • Gunakan analog 🕹️ / WASD untuk berjalan • Ketuk objek untuk interaksi
+      </div>
+
+      <!-- VIRTUAL JOYSTICK FOR FREE-ROAM WALKING -->
+      <div id="office3dJoystickContainer" style="position:absolute;bottom:22px;left:18px;width:100px;height:100px;z-index:25;touch-action:none;user-select:none;">
+        <div id="office3dJoystickBase" style="width:100%;height:100%;border-radius:50%;background:rgba(15,23,42,0.7);border:2px solid rgba(212,169,79,0.6);box-shadow:0 8px 24px rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;position:relative;backdrop-filter:blur(6px);">
+          <div id="office3dJoystickKnob" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#d97706);border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,0.5);position:absolute;display:flex;align-items:center;justify-content:center;font-size:18px;pointer-events:none;transition:transform 0.05s ease-out;">
+            🕹️
+          </div>
+        </div>
+        <div style="font-size:10px;font-weight:900;color:#fde047;text-align:center;margin-top:4px;letter-spacing:1px;text-shadow:0 2px 4px rgba(0,0,0,0.9);" data-i18n="office_3d_joystick_label">JALAN / MOVE</div>
+      </div>
+
+      <!-- INTERACTIVE TOOLTIP POPUP BANNER (Shows on hover/touch) -->
+      <div id="office3dTooltipBanner" style="display:none;position:absolute;bottom:75px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,rgba(15,23,42,0.95),rgba(30,41,59,0.95));border:1px solid #d4af37;box-shadow:0 10px 25px rgba(0,0,0,0.5);border-radius:12px;padding:10px 18px;max-width:90%;z-index:15;text-align:center;animation:fadeIn 0.2s ease;">
+        <div id="office3dTooltipTitle" style="font-size:13px;font-weight:900;color:#fde047;">Objek</div>
+        <div id="office3dTooltipHint" style="font-size:11px;color:#cbd5e1;margin-top:2px;">Ketuk untuk berinteraksi</div>
+      </div>
+    </div>
+
+    <!-- BOTTOM FAST ACTIONS DOCK -->
+    <div class="office3dBottomDock" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;background:linear-gradient(0deg,rgba(15,23,42,0.95),rgba(15,23,42,0.7));border-top:1px solid rgba(255,255,255,0.1);z-index:10;flex-wrap:wrap;">
+      <button class="iconBtn" onclick="Office3D.close(); const b = document.getElementById('btnShowBudget'); if(b) b.click();" style="font-size:12px;padding:6px 12px;background:rgba(16,185,129,0.2);color:#34d399;border-color:rgba(16,185,129,0.4);font-weight:700;">📂 Map APBD</button>
+      <button class="iconBtn" onclick="Office3D.close(); if(typeof openSecretaryBriefingModal==='function') openSecretaryBriefingModal();" style="font-size:12px;padding:6px 12px;background:rgba(212,169,79,0.2);color:#fde047;border-color:rgba(212,169,79,0.4);font-weight:700;">📞 Memo Sekretaris</button>
+      <button class="iconBtn" onclick="Office3D.close(); const l = document.getElementById('btnShowLife'); if(l) l.click();" style="font-size:12px;padding:6px 12px;background:rgba(236,72,153,0.2);color:#f472b6;border-color:rgba(236,72,153,0.4);font-weight:700;">💻 Karir & LHKPN</button>
+      <button class="iconBtn" onclick="Office3D.close(); if(typeof openMusrenbangDirect==='function') openMusrenbangDirect();" style="font-size:12px;padding:6px 12px;background:rgba(20,184,166,0.2);color:#5eead4;border-color:rgba(20,184,166,0.4);font-weight:700;">🗺️ Musrenbang</button>
+      <button class="iconBtn" onclick="Office3D.close(); if(typeof openCabinetDirect==='function') openCabinetDirect();" style="font-size:12px;padding:6px 12px;background:rgba(99,102,241,0.2);color:#a5b4fc;border-color:rgba(99,102,241,0.4);font-weight:700;">🗂️ Kabinet Kadis</button>
+      <button class="iconBtn" onclick="closeOffice3dModal()" style="font-size:12px;padding:6px 14px;background:rgba(239,68,68,0.2);color:#fca5a5;border-color:rgba(239,68,68,0.4);font-weight:800;" data-i18n="office_3d_btn_exit">← Kembali ke Balai Kota</button>
+    </div>
+
+  </div>
+</div>
+
+<div id="cameraFlashOverlay" class="cameraFlashEffect"></div>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="stormSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="60%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F766E"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#stormSky)"/>
+
+  <!-- Violent Waves -->
+  <path d="M 0 320 Q 150 250 300 320 T 600 310 T 800 330 L 800 450 L 0 450 Z" fill="#0E7490"/>
+  <path d="M 0 350 Q 200 280 400 350 T 800 340 L 800 450 L 0 450 Z" fill="#0891B2" opacity="0.8"/>
+  <path d="M 0 380 Q 250 310 500 380 T 800 370 L 800 450 L 0 450 Z" fill="#06B6D4" opacity="0.5"/>
+
+  <!-- Submerged Seawall -->
+  <polygon points="80,410 120,290 280,290 320,410" fill="#475569" stroke="#64748B" stroke-width="2"/>
+  <line x1="200" y1="290" x2="200" y2="410" stroke="#DC2626" stroke-width="4" stroke-dasharray="10 10"/>
+
+  <!-- Searchlight Beams -->
+  <polygon points="720,160 250,380 400,380" fill="#FEF08A" opacity="0.25"/>
+
+  <!-- Orange SAR Rescue Boat -->
+  <polygon points="260,370 290,395 380,395 400,370" fill="#EA580C"/>
+  <rect x="310" y="355" width="40" height="15" rx="3" fill="#F97316"/>
+  <circle cx="330" cy="350" r="4" fill="#3B82F6"/>
+
+  <!-- Base Banner -->
+  <rect x="0" y="420" width="800" height="30" fill="#042F2E"/>
+  <text x="400" y="440" text-anchor="middle" fill="#99F6E4" font-family="'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="14" letter-spacing="4">
+    EPILOG 11: BENCANA ROB PESISIR MENENGGELAMKAN KOTA
+  </text>
+</svg>

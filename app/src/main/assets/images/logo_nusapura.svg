@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" width="100%" height="100%">
+  <defs>
+    <!-- Gold Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3D382" />
+      <stop offset="50%" stop-color="#D4A94F" />
+      <stop offset="100%" stop-color="#B2822B" />
+    </linearGradient>
+    <!-- Navy Shield Gradient -->
+    <linearGradient id="navyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0E305C" />
+      <stop offset="100%" stop-color="#07192F" />
+    </linearGradient>
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.45" />
+    </filter>
+  </defs>
+
+  <!-- SHIELD EMBLEM -->
+  <g filter="url(#subtleShadow)" transform="translate(0, 10)">
+    <!-- Outer Gold Shield Border -->
+    <path d="M 200 20 
+             C 255 38, 305 44, 325 50 
+             C 328 115, 335 220, 200 315 
+             C 65 220, 72 115, 75 50 
+             C 95 44, 145 38, 200 20 Z" 
+          fill="none" 
+          stroke="url(#goldGrad)" 
+          stroke-width="14" 
+          stroke-linejoin="round" />
+
+    <!-- Inner Navy Shield Background -->
+    <path d="M 200 28 
+             C 252 45, 300 50, 318 56 
+             C 321 118, 327 215, 200 304 
+             C 73 215, 79 118, 82 56 
+             C 100 50, 148 45, 200 28 Z" 
+          fill="url(#navyGrad)" />
+
+    <!-- Thin Inner Gold Pinstripe -->
+    <path d="M 200 36 
+             C 248 52, 292 56, 308 62 
+             C 311 118, 316 205, 200 288 
+             C 84 205, 89 118, 92 62 
+             C 108 56, 152 52, 200 36 Z" 
+          fill="none" 
+          stroke="#D4A94F" 
+          stroke-width="2.5" 
+          stroke-opacity="0.85" />
+
+    <!-- STARS (Flanking Left & Right) -->
+    <!-- Left Star -->
+    <polygon points="128,100 132,111 143,111 134,118 137,129 128,122 119,129 122,118 113,111 124,111" 
+             fill="url(#goldGrad)" />
+    <!-- Right Star -->
+    <polygon points="272,100 276,111 287,111 278,118 281,129 272,122 263,129 266,118 257,111 268,111" 
+             fill="url(#goldGrad)" />
+
+    <!-- CITY HALL DOME & ROTUNDA (White / #FFFFFF) -->
+    <!-- Dome Spire / Finial -->
+    <circle cx="200" cy="80" r="5" fill="#FFFFFF" />
+    <path d="M 198 84 L 202 84 L 201 93 L 199 93 Z" fill="#FFFFFF" />
+
+    <!-- Dome Top Cap & Arch -->
+    <path d="M 168 128 
+             C 168 95, 232 95, 232 128 Z" 
+          fill="#FFFFFF" />
+    <!-- Entablature / Architrave beam above pillars -->
+    <rect x="162" y="128" width="76" height="8" rx="2" fill="#FFFFFF" />
+
+    <!-- Classical Pillars / Columns -->
+    <rect x="170" y="138" width="7" height="26" rx="1.5" fill="#FFFFFF" />
+    <rect x="184" y="138" width="7" height="26" rx="1.5" fill="#FFFFFF" />
+    <rect x="196" y="138" width="8" height="26" rx="1.5" fill="#FFFFFF" />
+    <rect x="209" y="138" width="7" height="26" rx="1.5" fill="#FFFFFF" />
+    <rect x="223" y="138" width="7" height="26" rx="1.5" fill="#FFFFFF" />
+
+    <!-- Classical Base Pedestal with Winged Wings / Buttresses -->
+    <path d="M 148 174 L 160 164 L 240 164 L 252 174 L 244 182 L 156 182 Z" fill="#FFFFFF" />
+    <!-- Center Base Foundation Beam -->
+    <rect x="154" y="172" width="92" height="10" rx="2" fill="#FFFFFF" />
+
+    <!-- WATER WAVES (Port / Maritime City Identity) -->
+    <!-- Wave 1 (Upper) -->
+    <path d="M 125 198 
+             Q 145 186, 165 198 
+             T 205 198 
+             T 245 198 
+             T 275 198" 
+          fill="none" 
+          stroke="#FFFFFF" 
+          stroke-width="5" 
+          stroke-linecap="round" />
+
+    <!-- Wave 2 (Middle) -->
+    <path d="M 135 218 
+             Q 155 206, 175 218 
+             T 215 218 
+             T 255 218 
+             T 265 218" 
+          fill="none" 
+          stroke="#FFFFFF" 
+          stroke-width="5" 
+          stroke-linecap="round" />
+
+    <!-- Wave 3 (Lower) -->
+    <path d="M 152 238 
+             Q 172 226, 192 238 
+             T 232 238 
+             T 248 238" 
+          fill="none" 
+          stroke="#FFFFFF" 
+          stroke-width="5" 
+          stroke-linecap="round" />
+  </g>
+
+  <!-- LOGO TYPOGRAPHY -->
+  <!-- "NUSAPURA" -->
+  <text x="200" y="385" 
+        text-anchor="middle" 
+        font-family="'Montserrat', 'Cinzel', 'Trebuchet MS', sans-serif" 
+        font-size="40" 
+        font-weight="900" 
+        letter-spacing="5" 
+        fill="#0B2545">NUSAPURA</text>
+
+  <!-- "CITY OF OPPORTUNITIES" -->
+  <text x="200" y="415" 
+        text-anchor="middle" 
+        font-family="'Montserrat', 'Inter', 'Arial', sans-serif" 
+        font-size="14.5" 
+        font-weight="800" 
+        letter-spacing="3" 
+        fill="#0B2545">CITY OF OPPORTUNITIES</text>
+</svg>
